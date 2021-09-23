@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Color.cpp" />
+    <ClCompile Include="glmath.cpp" />
+    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="log.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ModuleAudio.cpp" />
+    <ClCompile Include="ModuleCamera3D.cpp" />
+    <ClCompile Include="ModuleInput.cpp" />
+    <ClCompile Include="ModuleRenderer3D.cpp" />
+    <ClCompile Include="ModuleSceneIntro.cpp" />
+    <ClCompile Include="ModuleWindow.cpp" />
+    <ClCompile Include="Primitive.cpp" />
+    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="External\imgui\include\imgui.cpp">
+      <Filter>Tools\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui\include\imgui_demo.cpp">
+      <Filter>Tools\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui\include\imgui_draw.cpp">
+      <Filter>Tools\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui\include\imgui_impl_opengl3.cpp">
+      <Filter>Tools\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui\include\imgui_impl_sdl.cpp">
+      <Filter>Tools\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui\include\imgui_tables.cpp">
+      <Filter>Tools\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui\include\imgui_widgets.cpp">
+      <Filter>Tools\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleGUIManager.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application.h" />
+    <ClInclude Include="Color.h" />
+    <ClInclude Include="glmath.h" />
+    <ClInclude Include="Globals.h" />
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="ModuleCamera3D.h" />
+    <ClInclude Include="ModuleRenderer3D.h" />
+    <ClInclude Include="p2List.h" />
+    <ClInclude Include="Module.h" />
+    <ClInclude Include="ModuleAudio.h" />
+    <ClInclude Include="ModuleInput.h" />
+    <ClInclude Include="ModuleSceneIntro.h" />
+    <ClInclude Include="ModuleWindow.h" />
+    <ClInclude Include="p2DynArray.h" />
+    <ClInclude Include="p2Point.h" />
+    <ClInclude Include="Primitive.h" />
+    <ClInclude Include="Timer.h" />
+    <ClInclude Include="Glew\include\eglew.h">
+      <Filter>Tools\Glew</Filter>
+    </ClInclude>
+    <ClInclude Include="Glew\include\glew.h">
+      <Filter>Tools\Glew</Filter>
+    </ClInclude>
+    <ClInclude Include="Glew\include\glxew.h">
+      <Filter>Tools\Glew</Filter>
+    </ClInclude>
+    <ClInclude Include="Glew\include\wglew.h">
+      <Filter>Tools\Glew</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\include\imconfig.h">
+      <Filter>Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\include\imgui.h">
+      <Filter>Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\include\imgui_impl_opengl3.h">
+      <Filter>Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\include\imgui_impl_opengl3_loader.h">
+      <Filter>Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\include\imgui_impl_sdl.h">
+      <Filter>Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\include\imgui_internal.h">
+      <Filter>Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\include\imstb_rectpack.h">
+      <Filter>Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\include\imstb_textedit.h">
+      <Filter>Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\include\imstb_truetype.h">
+      <Filter>Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleGUIManager.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{efbf4077-d4f2-425c-9bc2-470a76b56ee2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\ImGui">
+      <UniqueIdentifier>{85f6b54b-5744-462b-9665-441a8ba5d7a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\Glew">
+      <UniqueIdentifier>{8d513c63-bfdc-4d85-9d8a-4f45d0f9007e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{e6098e3c-3dba-4b5f-8ac5-1f56ed3e91d6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
