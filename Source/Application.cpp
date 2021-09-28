@@ -41,9 +41,9 @@ bool Application::Init()
 	bool ret = true;
 
 	// Call Init() in all modules
-	std::vector<Module*>::reverse_iterator item = list_modules.rbegin();
+	std::vector<Module*>::iterator item = list_modules.begin();
 
-	while(item != list_modules.rend() && ret == true)
+	while(item != list_modules.end() && ret == true)
 	{
 		ret = (*item)->Init();
 		++item;
@@ -51,9 +51,9 @@ bool Application::Init()
 
 	// After all Init calls we call Start() in all modules
 	LOG("Application Start --------------");
-	item = list_modules.rbegin();
+	item = list_modules.begin();
 
-	while(item != list_modules.rend() && ret == true)
+	while(item != list_modules.end() && ret == true)
 	{
 		ret = (*item)->Start();
 		++item;
@@ -79,25 +79,25 @@ update_status Application::Update()
 	update_status ret = UPDATE_CONTINUE;
 	PrepareUpdate();
 
-	std::vector<Module*>::reverse_iterator item = list_modules.rbegin();
+	std::vector<Module*>::iterator item = list_modules.begin();
 
-	while (item != list_modules.rend() && ret == UPDATE_CONTINUE)
+	while (item != list_modules.end() && ret == UPDATE_CONTINUE)
 	{
 		ret = (*item)->PreUpdate();
 		++item;
 	}
 
-	item = list_modules.rbegin();
+	item = list_modules.begin();
 
-	while (item != list_modules.rend() && ret == UPDATE_CONTINUE)
+	while (item != list_modules.end() && ret == UPDATE_CONTINUE)
 	{
 		ret = (*item)->Update();
 		++item;
 	}
 
-	item = list_modules.rbegin();
+	item = list_modules.begin();
 
-	while (item != list_modules.rend() && ret == UPDATE_CONTINUE)
+	while (item != list_modules.end() && ret == UPDATE_CONTINUE)
 	{
 		ret = (*item)->PostUpdate();
 		++item;
