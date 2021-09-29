@@ -24,6 +24,11 @@ public:
 
 
 	update_status status = UPDATE_CONTINUE;
+
+	bool fullScreen = false;
+	bool resizable = false;
+	bool borderless = false;
+	bool fullDesktop = false;
 };
 
 

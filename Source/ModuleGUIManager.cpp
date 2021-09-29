@@ -44,12 +44,52 @@ update_status ModuleGuiManager::PreUpdate()
 
 update_status ModuleGuiManager::Update()
 {
-    ImGui::Begin("Quit");
+    bool showcase = false;
+
+    /*ImGui::Begin("Quit");
     if (ImGui::Button("Quit", ImVec2(50.0f, 25.0f)))
     {
         status = UPDATE_ERROR;
+    }*/
+    ImGui::Begin("Menu");
+    if (ImGui::BeginMenu("Help"))
+    {
+       /* if (ImGui::MenuItem("Gui Demo"))
+            showcase = !showcase;*/
+
+        ImGui::EndMenu();
     }
+    if (ImGui::BeginMenu("Quit"))
+    {
+        if (ImGui::Button("Quit", ImVec2(50.0f, 25.0f)))
+        {
+            status = UPDATE_ERROR;
+        }
+        ImGui::EndMenu();
+    }
+    ImGui::Begin("Config");
+    if (ImGui::Checkbox("Fullscreen", &fullScreen))
+    {
+        //App->window->fullScreen
+    }
+    ImGui::SameLine();
+    if (ImGui::Checkbox("Resizable", &resizable))
+    {
+
+    }
+    if (ImGui::Checkbox("Borderless", &borderless))
+    {
+
+    }
+    ImGui::SameLine();
+    if (ImGui::Checkbox("Full Desktop", &fullDesktop))
+    {
+
+    }
+    
     ImGui::End();
+    ImGui::End();
+    //ImGui::End();
 
     ImGui::ShowDemoWindow();
 
