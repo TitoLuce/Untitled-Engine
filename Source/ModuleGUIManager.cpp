@@ -44,54 +44,91 @@ update_status ModuleGuiManager::PreUpdate()
 
 update_status ModuleGuiManager::Update()
 {
-    bool showcase = false;
-
     /*ImGui::Begin("Quit");
     if (ImGui::Button("Quit", ImVec2(50.0f, 25.0f)))
     {
         status = UPDATE_ERROR;
     }*/
-    ImGui::Begin("Menu");
-    if (ImGui::BeginMenu("Help"))
-    {
-       /* if (ImGui::MenuItem("Gui Demo"))
-            showcase = !showcase;*/
+    //ImGui::Begin("Menu");
+    //if (ImGui::BeginMenu("Help"))
+    //{
+    //    if (ImGui::MenuItem("About")) {
+    //    }
 
-        ImGui::EndMenu();
-    }
-    if (ImGui::BeginMenu("Quit"))
+    //    ImGui::EndMenu();
+    //}
+    //if (ImGui::BeginMenu("Quit"))
+    //{
+    //    if (ImGui::Button("Quit", ImVec2(50.0f, 25.0f)))
+    //    {
+    //        status = UPDATE_ERROR;
+    //    }
+    //    ImGui::EndMenu();
+    //}
+    //ImGui::Begin("Config");
+    //if (ImGui::Checkbox("Fullscreen", &fullScreen))
+    //{
+    //    //App->window->fullScreen
+    //}
+    //ImGui::SameLine();
+    //if (ImGui::Checkbox("Resizable", &resizable))
+    //{
+
+    //}
+    //if (ImGui::Checkbox("Borderless", &borderless))
+    //{
+
+    //}
+    //ImGui::SameLine();
+    //if (ImGui::Checkbox("Full Desktop", &fullDesktop))
+    //{
+
+    //}
+    if (ImGui::BeginMainMenuBar())
     {
-        if (ImGui::Button("Quit", ImVec2(50.0f, 25.0f)))
+        if (ImGui::BeginMenu("File"))
         {
-            status = UPDATE_ERROR;
+            if (ImGui::MenuItem("Quit", "ESC"))
+            {
+                return UPDATE_STOP;
+            }
+
+            ImGui::EndMenu();
         }
-        ImGui::EndMenu();
-    }
-    ImGui::Begin("Config");
-    if (ImGui::Checkbox("Fullscreen", &fullScreen))
-    {
-        //App->window->fullScreen
-    }
-    ImGui::SameLine();
-    if (ImGui::Checkbox("Resizable", &resizable))
-    {
 
+        if (ImGui::BeginMenu("View"))
+        {
+            ImGui::MenuItem("Configuration", "F1", &configOn);
+
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("Help"))
+        {
+            if (ImGui::MenuItem("Gui Demo"))
+            {
+                showcase = !showcase;
+            }
+
+            if (ImGui::MenuItem("Documentation"))
+                App->RequestBrowser("https://github.com/TitoLuce/Untitled-Engine/wiki");
+
+            if (ImGui::MenuItem("Download latest"))
+                App->RequestBrowser("https://github.com/TitoLuce/Untitled-Engine/releases");
+
+            if (ImGui::MenuItem("Report a bug"))
+                App->RequestBrowser("https://github.com/TitoLuce/Untitled-Engine/issues");
+
+            ImGui::EndMenu();
+        }
     }
-    if (ImGui::Checkbox("Borderless", &borderless))
+    ImGui::EndMainMenuBar();
+
+    if (showcase)
     {
-
+        ImGui::ShowDemoWindow();
+        ImGui::ShowMetricsWindow();
     }
-    ImGui::SameLine();
-    if (ImGui::Checkbox("Full Desktop", &fullDesktop))
-    {
-
-    }
-    
-    ImGui::End();
-    ImGui::End();
-    //ImGui::End();
-
-    ImGui::ShowDemoWindow();
 
     return status;
 }

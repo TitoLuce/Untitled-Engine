@@ -29,6 +29,8 @@ public:
 	bool resizable = false;
 	bool borderless = false;
 	bool fullDesktop = false;
+	bool configOn = false;
+	bool showcase = false;
 };
 
 
