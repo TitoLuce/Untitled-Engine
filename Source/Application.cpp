@@ -4,8 +4,9 @@
 #include "Application.h"
 #include "ModuleWindow.h"
 
-Application::Application()
+Application::Application(ConsoleBuffer* _buff)
 {
+	buff = _buff;
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
 	scene_intro = new ModuleSceneIntro(this);
@@ -130,3 +131,59 @@ void Application::RequestBrowser(const char* url) const
 {
 	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
 }
+
+void Application::SetAppName(std::string _name)
+{
+	if (!_name.empty())
+	{
+		appName = _name;
+		window->SetTitle(_name.c_str());
+	}
+}
+
+const char* Application::GetAppName()
+{
+	return appName.c_str();
+}
+
+void Application::SetOrgName(std::string _name)
+{
+	if (!_name.empty())
+	{
+		orgName = _name;
+	}
+}
+const char* Application::GetOrgName()
+{
+	return orgName.c_str();
+}
+
+//void Application::LoadPrefs()
+//{
+//	char* buffer = nullptr;
+//	fs->Load(SETTINGS_FOLDER "config.json", &buffer);
+//
+//	if (buffer != nullptr)
+//	{
+//		Config config((const char*)buffer);
+//
+//		if (config.IsValid() == true)
+//		{
+//			LOG("Loading Engine Preferences");
+//
+//			ReadConfiguration(config.GetSection("App"));
+//
+//			Config section;
+//			for (list<Module*>::iterator it = modules.begin(); it != modules.end(); ++it)
+//			{
+//				section = config.GetSection((*it)->GetName());
+//				//if (section.IsValid())
+//				(*it)->Load(&section);
+//			}
+//		}
+//		else
+//			LOG("Cannot load Engine Preferences: Invalid format");
+//
+//		RELEASE_ARRAY(buffer);
+//	}
+//}

@@ -164,6 +164,9 @@
     <ClCompile Include="External\MathGeoLib\include\Time\Clock.cpp">
       <Filter>Tools\MathGeoLib\Time</Filter>
     </ClCompile>
+    <ClCompile Include="External\parson\include\parson.c">
+      <Filter>Tools\parson</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -446,6 +449,12 @@
     <ClInclude Include="External\MathGeoLib\include\Time\Clock.h">
       <Filter>Tools\MathGeoLib\Time</Filter>
     </ClInclude>
+    <ClInclude Include="External\parson\include\parson.h">
+      <Filter>Tools\parson</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleBuffer.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Tools">
@@ -474,6 +483,9 @@
     </Filter>
     <Filter Include="Tools\MathGeoLib\Time">
       <UniqueIdentifier>{b914a6f6-67aa-4d02-829d-ae1a69fa21cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\parson">
+      <UniqueIdentifier>{20569916-7d31-4c8e-bcb9-3f196ba43df3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

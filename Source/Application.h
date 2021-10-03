@@ -20,13 +20,17 @@ public:
 	ModuleCamera3D* camera;
 	ModuleGuiManager* gui;
 
+	ConsoleBuffer* buff;
+
 private:
+	std::string appName = "Untitled Engine";
+	std::string orgName = "UPC CITM";
 
 	std::vector<Module*> list_modules;
 
 public:
 
-	Application();
+	Application(ConsoleBuffer * _buff);
 	~Application();
 
 	bool Init();
@@ -34,6 +38,12 @@ public:
 	bool CleanUp();
 
 	void RequestBrowser(const char* url) const;
+	void LoadPrefs();
+	//void SavePrefs() const;
+	void SetAppName(std::string _name);
+	const char* GetAppName();
+	void SetOrgName(std::string _name);
+	const char* GetOrgName();
 
 private:
 

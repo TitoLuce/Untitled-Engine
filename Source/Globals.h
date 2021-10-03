@@ -1,10 +1,13 @@
 #pragma once
 #include <windows.h>
 #include <stdio.h>
+#include <vector>
+#include <string>
+#include "ConsoleBuffer.h"
 
-#define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
+#define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__)
 
-void log(const char file[], int line, const char* format, ...);
+const char* log(const char file[], int line, const char* format, ...);
 
 #define CAP(n) ((n <= 0.0f) ? n=0.0f : (n >= 1.0f) ? n=1.0f : n=n)
 
@@ -22,13 +25,19 @@ enum update_status
 	UPDATE_ERROR
 };
 
+//ImGui Globals
+#define IMGUI_LIGHT_GREY ImVec4(0.8f,0.8f,0.8f,1.f)
+#define IMGUI_GREY ImVec4(0.6f,0.6f,0.6f,1.f)
+#define IMGUI_BLUE ImVec4(0.2f,0.2f,1.f,1.f)
+#define IMGUI_GREEN ImVec4(0.f,1.f,0.f,1.f)
+#define IMGUI_YELLOW ImVec4(1.f,1.f,0.f,1.f)
+#define IMGUI_RED ImVec4(1.f,0.f,0.f,1.f)
+#define IMGUI_WHITE ImVec4(1.f,1.f,1.f,1.f)
+
+#define IMGUI_PRINT(field, format, ...) \
+	ImGui::Text(field); \
+	ImGui::SameLine(); \
+	ImGui::TextColored(IMGUI_YELLOW, format, __VA_ARGS__)
+
 // Configuration -----------
-#define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 768
 #define SCREEN_SIZE 1
-#define WIN_FULLSCREEN false
-#define WIN_RESIZABLE true
-#define WIN_BORDERLESS false
-#define WIN_FULLSCREEN_DESKTOP false
-#define VSYNC true
-#define TITLE "3D Physics Playground"

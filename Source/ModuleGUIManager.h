@@ -22,15 +22,18 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
+	update_status MenuBar();
+	void Config();
 
-	update_status status = UPDATE_CONTINUE;
+	void Console();
+	void LogConsole(const char* buff);
 
-	bool fullScreen = false;
-	bool resizable = false;
-	bool borderless = false;
-	bool fullDesktop = false;
 	bool configOn = false;
+	bool consoleOn = false;
+	bool aboutOn = false;
 	bool showcase = false;
+	
+	ImGuiTextBuffer LogConsoleText;
 };
 
 
