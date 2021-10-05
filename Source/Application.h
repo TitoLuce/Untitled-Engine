@@ -25,6 +25,7 @@ public:
 private:
 	std::string appName = "Untitled Engine";
 	std::string orgName = "UPC CITM";
+	std::string frameName = "Framerate";
 
 	std::vector<Module*> list_modules;
 
@@ -44,6 +45,8 @@ public:
 	const char* GetAppName();
 	void SetOrgName(std::string _name);
 	const char* GetOrgName();
+	void SetAppFrame(std::string _name);
+	const char* GetFrameName();
 
 private:
 

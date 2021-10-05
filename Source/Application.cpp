@@ -158,6 +158,18 @@ const char* Application::GetOrgName()
 	return orgName.c_str();
 }
 
+void Application::SetAppFrame(std::string _name)
+{
+	if (!_name.empty())
+	{
+		frameName = _name;
+	}
+}
+const char* Application::GetFrameName()
+{
+	return frameName.c_str();
+}
+
 //void Application::LoadPrefs()
 //{
 //	char* buffer = nullptr;

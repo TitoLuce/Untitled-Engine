@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleWindow.h"
+#include "imgui.h"
 
 ModuleGuiManager::ModuleGuiManager(Application* app, bool start_enabled) : Module(app, start_enabled)
 {}
@@ -167,6 +168,18 @@ void ModuleGuiManager::Config()
         }
         ImGui::Separator();
 
+        static char frameName[120];
+        strcpy_s(frameName, 120, App->GetFrameName());
+        if (ImGui::InputText("Framerate", frameName, IM_ARRAYSIZE(frameName), ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+        {
+            App->SetAppFrame(frameName);
+
+            
+
+            /*char title[25];
+            sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log->size() - 1]);
+            ImGui::PlotHistogram("##framerate", &fps_log[0], fps_log->size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));*/
+        }
     }
 
     if (ImGui::CollapsingHeader("Window"))
