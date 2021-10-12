@@ -28,7 +28,7 @@ public:
 	void Console();
 	void LogConsole(const char* buff);
 
-	void FrameRate();
+	//void FrameRate();
 
 	bool configOn = false;
 	bool consoleOn = false;

@@ -1,12 +1,16 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+
+#include "Glew/include/glew.h"
 #include "SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
+
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
+#pragma comment (lib, "glew32.lib") /* link Microsoft OpenGL lib   */
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -19,32 +23,67 @@ ModuleRenderer3D::~ModuleRenderer3D()
 // Called before render is available
 bool ModuleRenderer3D::Init()
 {
-	LOG("Creating 3D Renderer context");
+	if (App->gui != nullptr)
+	{
+		App->gui->LogConsole(LOG("Creating 3D Renderer context"));
+	}
+	
 	bool ret = true;
+
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 	
 	//Create context
 	context = SDL_GL_CreateContext(App->window->window);
 	if(context == NULL)
 	{
-		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
+		if (App->gui != nullptr)
+		{
+			App->gui->LogConsole(LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError()));
+		}
 		ret = false;
 	}
+
+	GLenum error = glewInit();
+	App->gui->LogConsole(LOG("Using Glew %s", glewGetString(GLEW_VERSION)));
+
+	if (error != GL_NO_ERROR)
+	{
+		App->gui->LogConsole(LOG("Error initializing glew library! %s", SDL_GetError()));
+		ret = false;
+	}
+
+	App->gui->LogConsole(LOG("Vendor: %s", glGetString(GL_VENDOR)));
+	App->gui->LogConsole(LOG("Renderer: %s", glGetString(GL_RENDERER)));
+	App->gui->LogConsole(LOG("OpenGL version supported %s", glGetString(GL_VERSION)));
+	App->gui->LogConsole(LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION)));
 	
 	if(ret == true)
 	{
 		//Use Vsync
-		if(vSync && SDL_GL_SetSwapInterval(1) < 0)
-			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+		if (vSync && SDL_GL_SetSwapInterval(1) < 0)
+		{
+			if (App->gui != nullptr)
+			{
+				App->gui->LogConsole(LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError()));
+			}
+		}
 
 		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
 		//Check for error
-		GLenum error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			if (App->gui != nullptr)
+			{
+				App->gui->LogConsole(LOG("Error initializing OpenGL! %s\n", gluErrorString(error)));
+			}
 			ret = false;
 		}
 
@@ -56,7 +95,10 @@ bool ModuleRenderer3D::Init()
 		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			if (App->gui != nullptr)
+			{
+				App->gui->LogConsole(LOG("Error initializing OpenGL! %s\n", gluErrorString(error)));
+			}
 			ret = false;
 		}
 		
@@ -70,7 +112,11 @@ bool ModuleRenderer3D::Init()
 		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			if (App->gui != nullptr)
+			{
+				App->gui->LogConsole(LOG("Error initializing OpenGL! %s\n", gluErrorString(error)));
+			}
+			
 			ret = false;
 		}
 		
@@ -123,6 +169,7 @@ update_status ModuleRenderer3D::PreUpdate()
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate()
 {
+
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }
@@ -130,7 +177,10 @@ update_status ModuleRenderer3D::PostUpdate()
 // Called before quitting
 bool ModuleRenderer3D::CleanUp()
 {
-	LOG("Destroying 3D Renderer");
+	if (App->gui != nullptr)
+	{
+		App->gui->LogConsole(LOG("Destroying 3D Renderer"));
+	}
 
 	SDL_GL_DeleteContext(context);
 
@@ -149,4 +199,14 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+}
+
+bool ModuleRenderer3D::GetWireframe()
+{
+	return wireframe;
+}
+
+void ModuleRenderer3D::ToggleWireframe()
+{
+	wireframe = !wireframe;
 }

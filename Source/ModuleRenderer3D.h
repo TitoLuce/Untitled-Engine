@@ -6,6 +6,22 @@
 
 #define MAX_LIGHTS 8
 
+struct MeshData
+{
+	uint id_vertex = 0;       // Vertex Buffer
+	uint num_vertex = 0;      // num of Vertex
+	float* vertex = nullptr;  // Vertex Array
+
+	uint id_index = 0;        // Index Buffer
+	uint num_index = 0;       // num of Index
+	uint* index = nullptr;    // Index Array
+};
+
+struct SceneData
+{
+	std::vector<MeshData*> myMeshes;
+};
+
 class ModuleRenderer3D : public Module
 {
 public:
@@ -19,6 +35,9 @@ public:
 
 	void OnResize(int width, int height);
 
+	bool GetWireframe();
+	void ToggleWireframe();
+
 public:
 
 	Light lights[MAX_LIGHTS];
@@ -26,6 +45,10 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
+
 private:
-	bool vSync = true;
+	bool vSync = false;
+	bool wireframe = false;
+
+	SceneData* scene = nullptr;
 };

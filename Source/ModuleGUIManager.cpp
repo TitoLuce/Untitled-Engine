@@ -208,28 +208,44 @@ void ModuleGuiManager::Config()
         ImGui::Text("Refresh rate:");
         ImGui::SameLine();
         ImGui::TextColored(IMGUI_YELLOW, "%u Hz", App->window->GetRefreshRate());
+
         bool fullscreen = App->window->GetFullscreen();
         if (ImGui::Checkbox("Fullscreen", &fullscreen))
         {
             App->window->SetFullscreen(fullscreen);
         }
+
         ImGui::SameLine();
+
         bool resizable = App->window->GetResizable();
         if (ImGui::Checkbox("Resizable", &resizable))
         {
             //This is useless as long
             App->window->SetResizable(resizable);
         }
+
         bool borderless = App->window->GetBorderless();
         if (ImGui::Checkbox("Borderless", &borderless))
         {
             App->window->SetBorderless(borderless);
         }
+
         ImGui::SameLine();
+
         bool fullscreenDesktop = App->window->GetFullscreenDesktop();
         if (ImGui::Checkbox("Fullscreen Desktop", &fullscreenDesktop))
         {
             App->window->SetFullscreenDesktop(fullscreenDesktop);
+        }
+    }
+
+    //Currently does nothing
+    if (ImGui::CollapsingHeader("Render"))
+    {
+        bool wireframe = App->renderer3D->GetWireframe();
+        if (ImGui::Checkbox("Wireframe", &wireframe))
+        {
+            App->renderer3D->ToggleWireframe();
         }
     }
     ImGui::End();
