@@ -24,6 +24,10 @@ Application::Application(ConsoleBuffer* _buff)
 
 	AddModule(gui);
 	AddModule(renderer3D);
+
+	maxFps = 60;
+
+	frameStart = 0;
 }
 
 Application::~Application()
@@ -59,6 +63,8 @@ bool Application::Init()
 		ret = (*item)->Start();
 		++item;
 	}
+
+	ms_timer.Start();
 	
 	return ret;
 }
@@ -67,11 +73,41 @@ bool Application::Init()
 // ---------------------------------------------
 void Application::PrepareUpdate()
 {
+	frameStart = ms_timer.Read();
+
+	totalFrames++;
+	startTicks = SDL_GetTicks();
+	startPerf = SDL_GetPerformanceCounter();
+
+	lastFrameMST.Start();
 }
 
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
+	int endFrame = ms_timer.Read();
+
+	lastFrameMs = lastFrameMST.Read();
+	lastFrameMST.Start();
+
+	if ((1000.0f / (float)maxFps) > dt)
+	{
+		SDL_Delay((1000.0f / (float)maxFps) - dt);
+		dt = (1000.0f / (float)maxFps);
+	}
+
+	Uint32 endTicks = SDL_GetTicks();
+	Uint32 endPerf = SDL_GetPerformanceCounter();
+	Uint32 framePerf = endPerf - startPerf;
+	float frameT = (endTicks - startTicks) / 1000.0f;
+	totalFrameTicks += endTicks - startTicks;
+
+	currentFps = 1.0f / frameT;
+	averageFps = 1000.0f / ((float)totalFrameTicks / totalFrames);
+	currentPerf = framePerf;
+
+	int ms = endFrame - frameStart;
+	dt = (float)ms / 1000.0f;
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules

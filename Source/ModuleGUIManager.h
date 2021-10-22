@@ -28,16 +28,25 @@ public:
 	void Console();
 	void LogConsole(const char* buff);
 
-	//void FrameRate();
-
 	bool configOn = false;
 	bool consoleOn = false;
 	bool aboutOn = false;
 	bool showcase = false;
-
-	std::vector<float*> fps_log[60];
 	
 	ImGuiTextBuffer LogConsoleText;
+
+private:
+
+	void UpdateFPS();
+
+private:
+
+	int maxFPS;
+	std::vector<float> fpsLog;
+	std::vector<float> msLog;
+	int fpsCounter;
+	int msCounter;
+	int averageFps;
 };
 
 

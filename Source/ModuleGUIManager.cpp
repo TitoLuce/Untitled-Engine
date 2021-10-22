@@ -5,8 +5,10 @@
 #include "ModuleWindow.h"
 #include "imgui.h"
 
-ModuleGuiManager::ModuleGuiManager(Application* app, bool start_enabled) : Module(app, start_enabled)
-{}
+ModuleGuiManager::ModuleGuiManager(Application* app, bool start_enabled) : Module(app, start_enabled), fpsLog(100), msLog(100)
+{
+    fpsCounter = 0;
+}
 
 // Destructor
 ModuleGuiManager::~ModuleGuiManager()
@@ -60,7 +62,6 @@ update_status ModuleGuiManager::Update()
     if (consoleOn) Console();
     //if (aboutOn) About();
 
-
     return status;
 }
 
@@ -83,6 +84,7 @@ bool ModuleGuiManager::CleanUp()
 
 update_status ModuleGuiManager::MenuBar()
 {
+
     if (ImGui::BeginMainMenuBar())
     {
         if (ImGui::BeginMenu("File"))
@@ -132,6 +134,8 @@ update_status ModuleGuiManager::MenuBar()
 
 void ModuleGuiManager::Config()
 {
+    UpdateFPS();
+
     ImGui::Begin("Configuration");
     if (ImGui::BeginMenu("Options"))
     {
@@ -168,18 +172,39 @@ void ModuleGuiManager::Config()
         }
         ImGui::Separator();
 
-        static char frameName[120];
-        strcpy_s(frameName, 120, App->GetFrameName());
-        if (ImGui::InputText("Framerate", frameName, IM_ARRAYSIZE(frameName), ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll))
+        // Framerate
+
+        maxFPS = App->GetMaxFps();
+        if (ImGui::SliderInt("Max FPS", &maxFPS, 1, 60))
         {
-            App->SetAppFrame(frameName);
-
-            
-
-            /*char title[25];
-            sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log->size() - 1]);
-            ImGui::PlotHistogram("##framerate", &fps_log[0], fps_log->size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));*/
+            App->SetMaxFps(maxFPS);
         }
+
+        ImGui::Text("Limit Framerate:");
+        ImGui::SameLine();
+        std::string t = std::to_string(App->GetMaxFps());
+        const char* t2 = t.c_str();
+        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+        ImGui::Text(t2);
+        ImGui::PopStyleColor();
+
+
+        ImGui::Text("Average Framerate:");
+        ImGui::SameLine();
+        t = std::to_string(averageFps);
+        t2 = t.c_str();
+        ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+        ImGui::Text(t2);
+        ImGui::PopStyleColor();
+
+
+        std::string tempTitle = "Framerate ";
+        tempTitle += std::to_string((int)App->GetFps());
+        ImGui::PlotHistogram("##framerate", &fpsLog[0], fpsLog.size(), 0, tempTitle.c_str(), 0, 100, ImVec2(310, 100));
+
+        tempTitle = "Milliseconds ";
+        tempTitle += std::to_string((int)App->GetMs());
+        ImGui::PlotHistogram("##milliseconds", &msLog[0], msLog.size(), 0, tempTitle.c_str(), 0.0f, 40.0f, ImVec2(310, 100));
     }
 
     if (ImGui::CollapsingHeader("Window"))
@@ -262,4 +287,36 @@ void ModuleGuiManager::Console()
 void ModuleGuiManager::LogConsole(const char* buff)
 {
     LogConsoleText.appendf(buff);
+}
+
+
+void ModuleGuiManager::UpdateFPS()
+{
+    static int fpsAdd = 0;
+
+    if (fpsCounter < 100)
+    {
+        fpsCounter++;
+    }
+    else
+    {
+        int i = 0;
+
+        while (i < 99)
+        {
+            fpsLog[i] = fpsLog[i + 1];
+            msLog[i] = msLog[i + 1];
+            fpsAdd += fpsLog[i];
+            i++;
+        }
+    }
+
+    fpsLog[fpsCounter - 1] = App->GetFps();
+    msLog[fpsCounter - 1] = App->GetMs();
+
+    if (fpsCounter == 100)
+    {
+        averageFps = fpsAdd / 100;
+        fpsAdd = 0;
+    }
 }

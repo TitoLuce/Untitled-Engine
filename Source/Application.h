@@ -48,9 +48,33 @@ public:
 	void SetAppFrame(std::string _name);
 	const char* GetFrameName();
 
+	const int GetMaxFps() { return maxFps; }
+	void SetMaxFps(int _maxFps) { maxFps = _maxFps; }
+	const float GetFps() { return (float)currentFps; }
+	const int GetAverageFps() { return averageFps; }
+	const float GetMs() { return (float)lastFrameMs; }
+
 private:
 
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
+
+private:
+
+	Timer ms_timer;
+
+	float dt;
+	int maxFps;
+	int frameStart;
+	float currentFps;
+	float averageFps;
+	int lastFrameMs;
+	float currentPerf;
+	Timer lastFrameMST;
+
+	Uint32 totalFrameTicks = 0;
+	Uint32 totalFrames = 0;
+	Uint32 startTicks;
+	Uint64 startPerf;
 };
