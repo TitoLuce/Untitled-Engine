@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
+#include "ModuleFileManager.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -16,8 +17,8 @@ bool ModuleSceneIntro::Start()
 	App->gui->LogConsole(LOG("Loading Intro assets"));
 	bool ret = true;
 
-	App->camera->Move(vec3(0, 2, 0));
-	App->camera->LookAt(vec3(0, 0, 0));
+	App->camera->Move(vec3(0, 300, 100));
+	App->camera->LookAt(vec3(0, 0, 100));
 	
 	//Draw plane
 	p = new Plane(0, 1, 0, 0);
@@ -47,9 +48,16 @@ update_status ModuleSceneIntro::Update()
 update_status ModuleSceneIntro::PostUpdate()
 {
 	p->Render();
-	cube->wire = App->renderer3D->GetWireframe();
-	cube->Render();
+	//cube->wire = App->renderer3D->GetWireframe();
+	//cube->Render();
 
+	std::vector<Primitive*>::iterator item = App->fileManager->meshList.begin();
+
+	while (item != App->fileManager->meshList.end())
+	{
+		(*item)->Render();
+		++item;
+	}
 
 	return UPDATE_CONTINUE;
 }

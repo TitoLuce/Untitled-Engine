@@ -55,8 +55,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>$(PorjectDir)External\MathGeoLib\include;$(ProjectDir)External\Glew\libx86;$(ProjectDir)External\SDL\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;glew32.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(PorjectDir)External\MathGeoLib\include;$(ProjectDir)External\Glew\libx86;$(ProjectDir)External\SDL\libx86;$(ProjectDir)External\Assimp\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;glew32.lib;SDL2main.lib;assimp.lib;zlibstatic.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -78,6 +78,43 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\ai_assert.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\anim.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\camera.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\cexport.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\cfileio.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\cimport.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\color4.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\Compiler\poppack1.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\Compiler\pstdint.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\Compiler\pushpack1.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\config.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\DefaultLogger.hpp" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\defs.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\Exporter.hpp" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\Importer.hpp" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\importerdesc.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\IOStream.hpp" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\IOSystem.hpp" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\light.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\Logger.hpp" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\LogStream.hpp" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\material.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\matrix3x3.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\matrix4x4.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\mesh.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\metadata.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\NullLogger.hpp" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\port\AndroidJNI\AndroidJNIIOSystem.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\postprocess.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\ProgressHandler.hpp" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\quaternion.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\scene.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\texture.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\types.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\vector2.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\vector3.h" />
+    <ClInclude Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\version.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="ConsoleBuffer.h" />
@@ -172,6 +209,7 @@
     <ClInclude Include="Glew\include\wglew.h" />
     <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="ModuleFileManager.h" />
     <ClInclude Include="ModuleGUIManager.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="ModuleCamera3D.h" />
@@ -241,6 +279,7 @@
     <ClCompile Include="log.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModuleCamera3D.cpp" />
+    <ClCompile Include="ModuleFileManager.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleRenderer3D.cpp" />
     <ClCompile Include="ModuleSceneIntro.cpp" />
@@ -250,6 +289,13 @@
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\color4.inl" />
+    <None Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\material.inl" />
+    <None Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\matrix3x3.inl" />
+    <None Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\matrix4x4.inl" />
+    <None Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\quaternion.inl" />
+    <None Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\vector2.inl" />
+    <None Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\vector3.inl" />
     <None Include="External\MathGeoLib\include\Geometry\KDTree.inl" />
     <None Include="External\MathGeoLib\include\Geometry\QuadTree.inl" />
     <None Include="External\MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_AVX.inl" />

@@ -3,24 +3,9 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
+#include "Primitive.h"
 
 #define MAX_LIGHTS 8
-
-struct MeshData
-{
-	uint id_vertex = 0;       // Vertex Buffer
-	uint num_vertex = 0;      // num of Vertex
-	float* vertex = nullptr;  // Vertex Array
-
-	uint id_index = 0;        // Index Buffer
-	uint num_index = 0;       // num of Index
-	uint* index = nullptr;    // Index Array
-};
-
-struct SceneData
-{
-	std::vector<MeshData*> myMeshes;
-};
 
 class ModuleRenderer3D : public Module
 {
@@ -29,6 +14,10 @@ public:
 	~ModuleRenderer3D();
 
 	bool Init();
+
+	bool InitMeshes(std::vector<Primitive*> list);
+	bool InitMesh(CustomPrimitive* m);
+
 	update_status PreUpdate();
 	update_status PostUpdate();
 	bool CleanUp();
@@ -49,6 +38,4 @@ public:
 private:
 	bool vSync = false;
 	bool wireframe = false;
-
-	SceneData* scene = nullptr;
 };

@@ -13,12 +13,13 @@ Application::Application(ConsoleBuffer* _buff)
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
 	gui = new ModuleGuiManager(this);
-
+	fileManager = new ModuleFileManager(this);
 
 	// Main Modules
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
+	AddModule(fileManager);
 
 	AddModule(scene_intro);
 

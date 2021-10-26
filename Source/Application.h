@@ -9,6 +9,7 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 #include "ModuleGUIManager.h"
+#include "ModuleFileManager.h"
 
 class Application
 {
@@ -19,6 +20,7 @@ public:
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 	ModuleGuiManager* gui;
+	ModuleFileManager* fileManager;
 
 	ConsoleBuffer* buff;
 
@@ -64,7 +66,7 @@ private:
 
 	Timer ms_timer;
 
-	float dt;
+	float dt = 0;
 	int maxFps;
 	int frameStart;
 	float currentFps;

@@ -1,15 +1,20 @@
 
 #include "Globals.h"
+
+#include "Glew/include/glew.h"
+#include "SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include "Primitive.h"
-//#include "glut/glut.h"
+
 
 //#pragma comment (lib, "glut/glut32.lib")
 
 // ------------------------------------------------------------
 Primitive::Primitive() : transform(IdentityMatrix), color(White), wire(false), axis(false), type(PrimitiveTypes::Primitive_Point)
 {}
+
+
 
 // ------------------------------------------------------------
 PrimitiveTypes Primitive::GetType() const
@@ -274,4 +279,18 @@ void Plane::InnerRender() const
 	}
 
 	glEnd();
+}
+
+// CUSTOM PRIMITIVE ==================================================
+CustomPrimitive::CustomPrimitive(PrimitiveData* _data) : Primitive(), data(_data)
+{
+	type = PrimitiveTypes::Custom_Primitive;
+}
+
+void CustomPrimitive::InnerRender() const
+{
+	glBindBuffer(GL_ARRAY_BUFFER, data->id_vertex);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data->id_index);
+
+	glDrawElements(GL_TRIANGLES, data->num_index, GL_UNSIGNED_INT, 0);
 }

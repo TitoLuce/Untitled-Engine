@@ -1,5 +1,7 @@
+#ifndef __PRIMITIVES_H__
+#define __PRIMITIVES_H__
 
-#pragma once
+
 #include "glmath.h"
 #include "Color.h"
 
@@ -10,8 +12,21 @@ enum PrimitiveTypes
 	Primitive_Plane,
 	Primitive_Cube,
 	Primitive_Sphere,
-	Primitive_Cylinder
+	Primitive_Cylinder,
+	Custom_Primitive
 };
+
+struct PrimitiveData
+{
+	uint id_index = 0; // index in VRAM
+	uint num_index = 0;
+	uint* indices = nullptr;
+
+	uint id_vertex = 0; // unique vertex in VRAM
+	uint num_vertex = 0;
+	float* vertices = nullptr;
+};
+
 
 class Primitive
 {
@@ -93,3 +108,15 @@ public:
 	vec3 normal;
 	float constant;
 };
+
+class CustomPrimitive :public Primitive
+{
+public:
+	CustomPrimitive(PrimitiveData* _data);
+	void InnerRender() const;
+
+public:
+	PrimitiveData* data;
+};
+
+#endif //!__PRIMITIVES_H__
