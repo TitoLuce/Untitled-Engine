@@ -61,7 +61,7 @@ update_status ModuleCamera3D::Update(float dt)
 		int dx = -App->input->GetMouseXMotion();
 		int dy = -App->input->GetMouseYMotion();
 
-		float sensivity = 0.25f;
+		float sensivity = 0.10f;
 
 		if (dx != 0)
 		{

@@ -39,7 +39,7 @@ bool ModuleGuiManager::Start()
     return true;
 }
 
-update_status ModuleGuiManager::PreUpdate()
+update_status ModuleGuiManager::PreUpdate(float dt)
 {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame(App->window->window);
@@ -48,7 +48,7 @@ update_status ModuleGuiManager::PreUpdate()
     return UPDATE_CONTINUE;
 }
 
-update_status ModuleGuiManager::Update()
+update_status ModuleGuiManager::Update(float dt)
 {
     update_status status = UPDATE_CONTINUE;
     status = MenuBar();
@@ -65,7 +65,7 @@ update_status ModuleGuiManager::Update()
     return status;
 }
 
-update_status ModuleGuiManager::PostUpdate()
+update_status ModuleGuiManager::PostUpdate(float dt)
 {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
