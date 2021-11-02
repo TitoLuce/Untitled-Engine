@@ -35,20 +35,60 @@ bool ModuleCamera3D::CleanUp()
 }
 
 // -----------------------------------------------------------------
-update_status ModuleCamera3D::Update()
+update_status ModuleCamera3D::Update(float dt)
 {
-	// OnKeys WASD keys -----------------------------------
 	
-	// Mouse motion ----------------
-	if(App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	vec3 newPos(0, 0, 0);
+
+	float speed = 7.0f * dt;
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+		speed = 14.0f * dt;
+	
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
+
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
+
+	Position += newPos;
+	Reference += newPos;
+
+	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
 		int dx = -App->input->GetMouseXMotion();
 		int dy = -App->input->GetMouseYMotion();
 
-		// TODO (Homework): Rotate the camera with the mouse
+		float sensivity = 0.25f;
+
+		if (dx != 0)
+		{
+			float deltaX = (float)dx * sensivity;
+
+			X = rotate(X, deltaX, vec3(0.0f, 1.0f, 0.0f));
+			Y = rotate(Y, deltaX, vec3(0.0f, 1.0f, 0.0f));
+			Z = rotate(Z, deltaX, vec3(0.0f, 1.0f, 0.0f));
+		}
+
+		if (dy != 0)
+		{
+			float deltaY = (float)dy * sensivity;
+
+			Y = rotate(Y, deltaY, X);
+			Z = rotate(Z, deltaY, X);
+
+			if (Y.y < 0.0f)
+			{
+				Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
+				Y = cross(Z, X);
+			}
+		}
+
+		Position = Reference + Z * length(Position);
 	}
 
-	// Recalculate matrix -------------
 	CalculateViewMatrix();
 
 	return UPDATE_CONTINUE;

@@ -41,12 +41,12 @@ bool ModuleSceneIntro::CleanUp()
 }
 
 // Update: draw background
-update_status ModuleSceneIntro::Update()
+update_status ModuleSceneIntro::Update(float dt)
 {
 	return UPDATE_CONTINUE;
 }
 
-update_status ModuleSceneIntro::PostUpdate()
+update_status ModuleSceneIntro::PostUpdate(float dt)
 {
 	p->Render();
 	//cube->wire = App->renderer3D->GetWireframe();

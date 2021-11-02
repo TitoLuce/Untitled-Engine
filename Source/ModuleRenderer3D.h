@@ -18,8 +18,8 @@ public:
 	bool InitMeshes(std::vector<Primitive*> list);
 	bool InitMesh(CustomPrimitive* m);
 
-	update_status PreUpdate();
-	update_status PostUpdate();
+	update_status PreUpdate(float dt);
+	update_status PostUpdate(float dt);
 	bool CleanUp();
 
 	void OnResize(int width, int height);
