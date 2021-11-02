@@ -49,14 +49,14 @@
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PreprocessorDefinitions>WINDOWS_IGNORE_PACKING_MISMATCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)External\SDL\include;$(ProjectDir)External;$(ProjectDir)External\imgui\include;$(ProjectDir)External\MathGeoLib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)External\SDL\include;$(ProjectDir)External;$(ProjectDir)External\imgui\include;$(ProjectDir)External\MathGeoLib\include;$(ProjectDir)External\DevIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>$(PorjectDir)External\MathGeoLib\include;$(ProjectDir)External\Glew\libx86;$(ProjectDir)External\SDL\libx86;$(ProjectDir)External\Assimp\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;glew32.lib;SDL2main.lib;assimp.lib;zlibstatic.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(PorjectDir)External\MathGeoLib\include;$(ProjectDir)External\Glew\libx86;$(ProjectDir)External\SDL\libx86;$(ProjectDir)External\Assimp\libx86;$(ProjectDir)External\DevIL\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;glew32.lib;SDL2main.lib;assimp.lib;zlibstatic.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -118,6 +118,14 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="ConsoleBuffer.h" />
+    <ClInclude Include="External\DevIL\include\devil_cpp_wrapper.hpp" />
+    <ClInclude Include="External\DevIL\include\devil_internal_exports.h" />
+    <ClInclude Include="External\DevIL\include\il.h" />
+    <ClInclude Include="External\DevIL\include\ilu.h" />
+    <ClInclude Include="External\DevIL\include\ilut.h" />
+    <ClInclude Include="External\DevIL\include\ilut_config.h" />
+    <ClInclude Include="External\DevIL\include\ilu_region.h" />
+    <ClInclude Include="External\DevIL\include\il_wrap.h" />
     <ClInclude Include="External\imgui\include\imconfig.h" />
     <ClInclude Include="External\imgui\include\imgui.h" />
     <ClInclude Include="External\imgui\include\imgui_impl_opengl3.h" />
@@ -296,6 +304,7 @@
     <None Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\quaternion.inl" />
     <None Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\vector2.inl" />
     <None Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\vector3.inl" />
+    <None Include="External\DevIL\include\DevIL.i" />
     <None Include="External\MathGeoLib\include\Geometry\KDTree.inl" />
     <None Include="External\MathGeoLib\include\Geometry\QuadTree.inl" />
     <None Include="External\MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_AVX.inl" />

@@ -6,8 +6,7 @@
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
-
-
+#include "SDL_opengl.h"
 
 ModuleFileManager::ModuleFileManager(Application* app, bool start_enabled) : Module(app, start_enabled)
 {}
@@ -25,7 +24,9 @@ bool ModuleFileManager::Init()
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	aiAttachLogStream(&stream);
 
-	LoadGeometry("Assets/warrior.fbx");
+	//LoadGeometry("Assets/BakerHouse.fbx");
+	//CheckerTexture();
+	//LoadTexture();
 
 	return true;
 }
@@ -92,4 +93,32 @@ Primitive* ModuleFileManager::LoadModel(aiMesh* mesh)
 	}
 	
 	return nullptr;
+}
+
+//void ModuleFileManager::CheckerTexture()
+//{
+//	GLubyte checkerImage[CHECKERS_WIDTH][CHECKERS_HEIGHT][4];
+//	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
+//		for (int j = 0; j < CHECKERS_WIDTH; j++) {
+//			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+//			checkerImage[i][j][0] = (GLubyte)c;
+//			checkerImage[i][j][1] = (GLubyte)c;
+//			checkerImage[i][j][2] = (GLubyte)c;
+//			checkerImage[i][j][3] = (GLubyte)255;
+//		}
+//	}
+//	texture = (GLubyte*)checkerImage;
+//}
+
+void ModuleFileManager::LoadTexture()
+{
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, (GLuint*)textureID);
+	glBindTexture(GL_TEXTURE_2D, (GLuint)textureID);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT,
+		0, GL_RGBA, GL_UNSIGNED_BYTE, texture);
 }

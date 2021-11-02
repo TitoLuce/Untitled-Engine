@@ -6,6 +6,11 @@
 #include "Primitive.h"
 #include "Assimp/include/mesh.h"
 
+#define CHECKERS_HEIGHT 128
+#define CHECKERS_WIDTH 128
+
+typedef unsigned char GLubyte;
+
 class ModuleFileManager : public Module
 {
 public:
@@ -19,9 +24,15 @@ public:
 	void LoadGeometry(const char* path);
 	Primitive* LoadModel(aiMesh* mesh);
 
+	//void CheckerTexture();
+	void LoadTexture();
+
 public:
 
 	std::vector<Primitive*> meshList;
+
+	uint* textureID;
+	GLubyte* texture;
 };
 
 #endif // !__MODULE_FILE_MANAGER_H__

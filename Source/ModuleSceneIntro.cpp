@@ -17,15 +17,17 @@ bool ModuleSceneIntro::Start()
 	App->gui->LogConsole(LOG("Loading Intro assets"));
 	bool ret = true;
 
-	App->camera->Move(vec3(0, 300, 100));
-	App->camera->LookAt(vec3(0, 0, 100));
+	App->camera->Move(vec3(0, 2, 0));
+	App->camera->LookAt(vec3(0, 0, 0));
 	
 	//Draw plane
-	p = new Plane(0, 1, 0, 0);
+	p = new Plane();
 	p->axis = true;
 
 	//Draw stuff
-	cube = new Cube(1, 1, 1);
+	cube= new Cube();
+	cube->SetPos(0, 0, 0);
+
 
 	return ret;
 }
@@ -41,7 +43,6 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
-
 	return UPDATE_CONTINUE;
 }
 
@@ -49,7 +50,7 @@ update_status ModuleSceneIntro::PostUpdate()
 {
 	p->Render();
 	//cube->wire = App->renderer3D->GetWireframe();
-	//cube->Render();
+	cube->Render();
 
 	std::vector<Primitive*>::iterator item = App->fileManager->meshList.begin();
 

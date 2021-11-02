@@ -20,6 +20,7 @@ public:
 	bool CleanUp();
 
 public:
+	int angle = 0;
 
 	Plane* p;
 	Cube* cube;

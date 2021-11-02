@@ -5,6 +5,9 @@
 #include "glmath.h"
 #include "Color.h"
 
+typedef float GLfloat;
+typedef unsigned char GLubyte;
+
 enum PrimitiveTypes
 {
 	Primitive_Point,
@@ -27,12 +30,35 @@ struct PrimitiveData
 	float* vertices = nullptr;
 };
 
+struct Texture
+{
+	std::string name = "Unnamed Texture";
+	std::string path = "Unknown path";
+	uint id = -1;
+	GLubyte* data = nullptr;
+	int width = -1;
+	int height = -1;
+
+	~Texture()
+	{
+		name.clear();
+		path.clear();
+		//delete data;
+		data = nullptr;
+	}
+};
+
 
 class Primitive
 {
 public:
 
 	Primitive();
+
+	void GenerateBuffers();
+
+	bool SetTexture(Texture* texture);
+	void SetCheckersTexture();
 
 	virtual void	Render() const;
 	virtual void	InnerRender() const;
@@ -47,6 +73,25 @@ public:
 	mat4x4 transform;
 	bool axis,wire;
 
+	uint vertexBuffer = -1;
+	int vertexAmount = -1;
+	float* vertices = nullptr;
+
+	uint indexBuffer = -1;
+	int indexAmount = -1;
+	uint* indices = nullptr;
+
+	uint normalsBuffer;
+	float* normals;
+
+	uint textureBuffer = -1;
+	uint textureID;
+	float* texCoords = nullptr;
+	float* colors;
+	Texture* texture;
+
+	const char* name;
+
 protected:
 	PrimitiveTypes type;
 };
@@ -56,10 +101,6 @@ class Cube : public Primitive
 {
 public :
 	Cube();
-	Cube(float sizeX, float sizeY, float sizeZ);
-	void InnerRender() const;
-public:
-	vec3 size;
 };
 
 // ============================================
@@ -103,7 +144,7 @@ class Plane : public Primitive
 public:
 	Plane();
 	Plane(float x, float y, float z, float d);
-	void InnerRender() const;
+	void Render() const;
 public:
 	vec3 normal;
 	float constant;

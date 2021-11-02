@@ -38,16 +38,6 @@ bool ModuleCamera3D::CleanUp()
 update_status ModuleCamera3D::Update()
 {
 	// OnKeys WASD keys -----------------------------------
-
-	// TODO 3: Make the camera go up/down when pressing R (up) F(down)
-
-	// TODO 4: Make the camera go forward (w) and backward with (s)
-	// Note that the vectors X/Y/Z contain the current axis of the camera
-	// you can read them to modify Position
-
-	// TODO 5: Make the camera go left (a) and right with (d)
-	// Note that the vectors X/Y/Z contain the current axis of the camera
-	// you can read them to modify Position
 	
 	// Mouse motion ----------------
 	if(App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)

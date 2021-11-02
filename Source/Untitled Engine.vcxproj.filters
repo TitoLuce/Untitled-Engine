@@ -568,6 +568,30 @@
       <Filter>Tools\Assimp</Filter>
     </ClInclude>
     <ClInclude Include="ModuleFileManager.h" />
+    <ClInclude Include="External\DevIL\include\devil_cpp_wrapper.hpp">
+      <Filter>Tools\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="External\DevIL\include\devil_internal_exports.h">
+      <Filter>Tools\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="External\DevIL\include\il.h">
+      <Filter>Tools\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="External\DevIL\include\il_wrap.h">
+      <Filter>Tools\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="External\DevIL\include\ilu.h">
+      <Filter>Tools\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="External\DevIL\include\ilu_region.h">
+      <Filter>Tools\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="External\DevIL\include\ilut.h">
+      <Filter>Tools\DevIL</Filter>
+    </ClInclude>
+    <ClInclude Include="External\DevIL\include\ilut_config.h">
+      <Filter>Tools\DevIL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Tools">
@@ -602,6 +626,9 @@
     </Filter>
     <Filter Include="Tools\Assimp">
       <UniqueIdentifier>{0a415e58-bdf0-48f6-86e9-2df38e831939}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\DevIL">
+      <UniqueIdentifier>{79bac6c8-07fd-4a09-889b-17b163a0afa3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -646,6 +673,9 @@
     </None>
     <None Include="..\..\..\..\Desktop\Thor-Engine-master\ThorEngine\Source Code\External Libraries\Assimp\include\quaternion.inl">
       <Filter>Tools\Assimp</Filter>
+    </None>
+    <None Include="External\DevIL\include\DevIL.i">
+      <Filter>Tools\DevIL</Filter>
     </None>
   </ItemGroup>
 </Project>
