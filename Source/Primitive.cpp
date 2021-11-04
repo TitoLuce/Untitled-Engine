@@ -29,17 +29,17 @@ void Primitive::GenerateBuffers()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexAmount * 3, vertices, GL_STATIC_DRAW);
 
 	//normals
-	glGenBuffers(1, (GLuint*)&(normalsBuffer));
+	glGenBuffers(1, &normalsBuffer);
 	glBindBuffer(GL_NORMAL_ARRAY, normalsBuffer);
 	glBufferData(GL_NORMAL_ARRAY, sizeof(float) * vertexAmount * 3, normals, GL_STATIC_DRAW);
 
 	//textures
-	glGenBuffers(1, (GLuint*)&(textureBuffer));
+	glGenBuffers(1, &textureBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexAmount * 2, texCoords, GL_STATIC_DRAW);
 
 	//indices
-	glGenBuffers(1, (GLuint*)&(indexBuffer));
+	glGenBuffers(1, &indexBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * indexAmount, indices, GL_STATIC_DRAW);
 }
@@ -66,10 +66,10 @@ bool Primitive::SetTexture(Texture* texture)
 
 void Primitive::SetCheckersTexture()
 {
-	int CHECKERS_WIDTH = 64;
-	int CHECKERS_HEIGHT = 64;
+	int CHECKERS_WIDTH = 128;
+	int CHECKERS_HEIGHT = 128;
 
-	GLubyte checkerImage[64][64][4];
+	GLubyte checkerImage[128][128][4];
 
 	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
 		for (int j = 0; j < CHECKERS_WIDTH; j++) {
@@ -87,11 +87,11 @@ void Primitive::SetCheckersTexture()
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT,
-		0, GL_RGBA, GL_UNSIGNED_BYTE, texture);
+		0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
@@ -114,8 +114,8 @@ void Primitive::Render() const
 	//textures
 	glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
 	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-
 	glBindTexture(GL_TEXTURE_2D, textureID);
+	
 
 	//indices
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
@@ -162,104 +162,21 @@ void Primitive::Render() const
 	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+	//Draw
 	glDrawElements(GL_TRIANGLES, indexAmount, GL_UNSIGNED_INT, NULL);
 
+	//Reset Binds
+	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_NORMAL_ARRAY, 0);
 	glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	
-
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glPopMatrix();
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-	//glEnableClientState(GL_VERTEX_ARRAY);
-	//glEnableClientState(GL_NORMAL_ARRAY);
-	//glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-	////vertices
-	//glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	//glVertexPointer(3, GL_FLOAT, 0, NULL);
-
-	////normals
-	//glBindBuffer(GL_NORMAL_ARRAY, normalsBuffer);
-	//glNormalPointer(GL_FLOAT, 0, NULL);
-
-	////textures
-	//glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
-	//glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-
-	//glBindTexture(GL_TEXTURE_2D, textureID);
-
-	////indices
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-
-	//glPushMatrix();
-	//glMultMatrixf(transform.M);
-
-	//if(axis == true)
-	//{
-	//	// Draw Axis Grid
-	//	glLineWidth(2.0f);
-
-	//	glBegin(GL_LINES);
-
-	//	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-
-	//	glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(1.0f, 0.0f, 0.0f);
-	//	glVertex3f(1.0f, 0.1f, 0.0f); glVertex3f(1.1f, -0.1f, 0.0f);
-	//	glVertex3f(1.1f, 0.1f, 0.0f); glVertex3f(1.0f, -0.1f, 0.0f);
-
-	//	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
-
-	//	glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(0.0f, 1.0f, 0.0f);
-	//	glVertex3f(-0.05f, 1.25f, 0.0f); glVertex3f(0.0f, 1.15f, 0.0f);
-	//	glVertex3f(0.05f, 1.25f, 0.0f); glVertex3f(0.0f, 1.15f, 0.0f);
-	//	glVertex3f(0.0f, 1.15f, 0.0f); glVertex3f(0.0f, 1.05f, 0.0f);
-
-	//	glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
-
-	//	glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(0.0f, 0.0f, 1.0f);
-	//	glVertex3f(-0.05f, 0.1f, 1.05f); glVertex3f(0.05f, 0.1f, 1.05f);
-	//	glVertex3f(0.05f, 0.1f, 1.05f); glVertex3f(-0.05f, -0.1f, 1.05f);
-	//	glVertex3f(-0.05f, -0.1f, 1.05f); glVertex3f(0.05f, -0.1f, 1.05f);
-
-	//	glEnd();
-
-	//	glLineWidth(1.0f);
-	//}
-
-	//glColor3f(color.r, color.g, color.b);
-
-	//if(wire)
-	//	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	//else
-	//	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-	//
-
-	//glDrawElements(GL_TRIANGLES, indexAmount, GL_UNSIGNED_INT, NULL);
-
-	//
-
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
-	//glBindBuffer(GL_NORMAL_ARRAY, 0);
-	//glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	//
-
-	//glBindTexture(GL_TEXTURE_2D, 0);
-
-	//glPopMatrix();
-
-	//glDisableClientState(GL_VERTEX_ARRAY);
-	//glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
 // ------------------------------------------------------------

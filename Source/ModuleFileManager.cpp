@@ -24,7 +24,6 @@ bool ModuleFileManager::Init()
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	aiAttachLogStream(&stream);
 
-	//CheckerTexture();
 	//LoadTexture();
 
 	return true;
@@ -92,38 +91,44 @@ Primitive* ModuleFileManager::LoadModel(aiMesh* mesh)
 				memcpy(&ourMesh->indices[i * 3], mesh->mFaces[i].mIndices, 3 * sizeof(uint));
 			}
 		}
+		if (mesh->mTextureCoords != NULL)
+		{
+			ourMesh->texCoords = new float[ourMesh->vertexAmount * 2];
+
+			for (uint i = 0; i < ourMesh->vertexAmount; i++)
+			{
+				ourMesh->texCoords[i*2] = mesh->mTextureCoords[0][i].x;
+				ourMesh->texCoords[(i*2)+1] = mesh->mTextureCoords[0][i].y;
+			}
+		}
+		else
+		{
+			App->gui->LogConsole(LOG("Warning, No texture coordinates found"));
+		}
+		if (mesh->mTextureCoords != NULL)
+		{
+			ourMesh->normals = new float[ourMesh->vertexAmount * 3];
+
+			for (uint i = 0; i < ourMesh->vertexAmount; i++)
+			{
+				ourMesh->normals[i * 2] = mesh->mNormals[i].x;
+				ourMesh->normals[(i * 2) + 1] = mesh->mNormals[i].y;
+				ourMesh->normals[(i * 2) + 2] = mesh->mNormals[i].z;
+			}
+		}
+		else
+		{
+			App->gui->LogConsole(LOG("Warning, No normals coordinates found"));
+		}
+
+
+
+		ourMesh->SetTexture(nullptr);
 		ourMesh->GenerateBuffers();
+		
 		meshList.push_back(ourMesh);
 		return ourMesh;
 	}
 	
 	return nullptr;
-}
-
-//void ModuleFileManager::CheckerTexture()
-//{
-//	GLubyte checkerImage[CHECKERS_WIDTH][CHECKERS_HEIGHT][4];
-//	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
-//		for (int j = 0; j < CHECKERS_WIDTH; j++) {
-//			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
-//			checkerImage[i][j][0] = (GLubyte)c;
-//			checkerImage[i][j][1] = (GLubyte)c;
-//			checkerImage[i][j][2] = (GLubyte)c;
-//			checkerImage[i][j][3] = (GLubyte)255;
-//		}
-//	}
-//	texture = (GLubyte*)checkerImage;
-//}
-
-void ModuleFileManager::LoadTexture()
-{
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, (GLuint*)textureID);
-	glBindTexture(GL_TEXTURE_2D, (GLuint)textureID);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT,
-		0, GL_RGBA, GL_UNSIGNED_BYTE, texture);
 }

@@ -25,9 +25,6 @@ public:
 	void LoadGeometry(const char* path);
 	Primitive* LoadModel(aiMesh* mesh);
 
-	//void CheckerTexture();
-	void LoadTexture();
-
 public:
 
 	std::vector<Primitive*> meshList;
