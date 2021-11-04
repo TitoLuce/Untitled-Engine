@@ -50,7 +50,7 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 {
 	p->Render();
 	//cube->wire = App->renderer3D->GetWireframe();
-	cube->Render();
+	//cube->Render();
 
 	std::vector<Primitive*>::iterator item = App->fileManager->meshList.begin();
 

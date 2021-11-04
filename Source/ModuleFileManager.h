@@ -19,6 +19,7 @@ public:
 	virtual ~ModuleFileManager();
 
 	bool Init();
+	bool Start();
 	bool CleanUp();
 
 	void LoadGeometry(const char* path);

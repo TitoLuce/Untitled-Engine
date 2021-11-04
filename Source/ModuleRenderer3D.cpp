@@ -147,9 +147,6 @@ bool ModuleRenderer3D::Init()
 	// Projection matrix for
 	OnResize(App->window->GetWidth(), App->window->GetHeight());
 
-	// Loading Meshes
-	ret = InitMeshes(App->fileManager->meshList);
-
 	return ret;
 }
 
@@ -214,33 +211,4 @@ bool ModuleRenderer3D::GetWireframe()
 void ModuleRenderer3D::ToggleWireframe()
 {
 	wireframe = !wireframe;
-}
-
-bool ModuleRenderer3D::InitMeshes(std::vector<Primitive*> list)
-{
-	std::vector<Primitive*>::iterator item = list.begin();
-
-	while (item != list.end())
-	{
-		if ((*item)->GetType() == PrimitiveTypes::Custom_Primitive) InitMesh((CustomPrimitive*)(*item));
-		++item;
-	}
-
-	return true;
-}
-
-bool ModuleRenderer3D::InitMesh(CustomPrimitive* p)
-{
-	glGenBuffers(1, &p->data->id_vertex);
-	glGenBuffers(1, &p->data->id_index);
-
-	glBindBuffer(GL_ARRAY_BUFFER, p->data->id_vertex);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * p->data->num_vertex * 3, p->data->vertices, GL_STATIC_DRAW);
-
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, p->data->id_index);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * p->data->num_index, p->data->indices, GL_STATIC_DRAW);
-	return true;
 }

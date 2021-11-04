@@ -15,19 +15,7 @@ enum PrimitiveTypes
 	Primitive_Plane,
 	Primitive_Cube,
 	Primitive_Sphere,
-	Primitive_Cylinder,
-	Custom_Primitive
-};
-
-struct PrimitiveData
-{
-	uint id_index = 0; // index in VRAM
-	uint num_index = 0;
-	uint* indices = nullptr;
-
-	uint id_vertex = 0; // unique vertex in VRAM
-	uint num_vertex = 0;
-	float* vertices = nullptr;
+	Primitive_Cylinder
 };
 
 struct Texture
@@ -81,8 +69,8 @@ public:
 	int indexAmount = -1;
 	uint* indices = nullptr;
 
-	uint normalsBuffer;
-	float* normals;
+	uint normalsBuffer = -1;
+	float* normals = nullptr;
 
 	uint textureBuffer = -1;
 	uint textureID;
@@ -148,16 +136,6 @@ public:
 public:
 	vec3 normal;
 	float constant;
-};
-
-class CustomPrimitive :public Primitive
-{
-public:
-	CustomPrimitive(PrimitiveData* _data);
-	void InnerRender() const;
-
-public:
-	PrimitiveData* data;
 };
 
 #endif //!__PRIMITIVES_H__

@@ -15,9 +15,6 @@ public:
 
 	bool Init();
 
-	bool InitMeshes(std::vector<Primitive*> list);
-	bool InitMesh(CustomPrimitive* m);
-
 	update_status PreUpdate(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();

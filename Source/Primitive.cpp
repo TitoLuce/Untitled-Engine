@@ -123,7 +123,7 @@ void Primitive::Render() const
 	glPushMatrix();
 	glMultMatrixf(transform.M);
 
-	if(axis == true)
+	if (axis == true)
 	{
 		// Draw Axis Grid
 		glLineWidth(2.0f);
@@ -157,25 +157,109 @@ void Primitive::Render() const
 
 	glColor3f(color.r, color.g, color.b);
 
-	if(wire)
+	if (wire)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	glDrawElements(GL_TRIANGLES, indexAmount, GL_UNSIGNED_INT, NULL);
 
-	glPopMatrix();
-
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_NORMAL_ARRAY, 0);
 	glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
+	
+
 	glBindTexture(GL_TEXTURE_2D, 0);
 
+	glPopMatrix();
+
 	glDisableClientState(GL_VERTEX_ARRAY);
-	//glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	//glEnableClientState(GL_VERTEX_ARRAY);
+	//glEnableClientState(GL_NORMAL_ARRAY);
+	//glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	////vertices
+	//glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+	//glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+	////normals
+	//glBindBuffer(GL_NORMAL_ARRAY, normalsBuffer);
+	//glNormalPointer(GL_FLOAT, 0, NULL);
+
+	////textures
+	//glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
+	//glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+
+	//glBindTexture(GL_TEXTURE_2D, textureID);
+
+	////indices
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+
+	//glPushMatrix();
+	//glMultMatrixf(transform.M);
+
+	//if(axis == true)
+	//{
+	//	// Draw Axis Grid
+	//	glLineWidth(2.0f);
+
+	//	glBegin(GL_LINES);
+
+	//	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+
+	//	glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(1.0f, 0.0f, 0.0f);
+	//	glVertex3f(1.0f, 0.1f, 0.0f); glVertex3f(1.1f, -0.1f, 0.0f);
+	//	glVertex3f(1.1f, 0.1f, 0.0f); glVertex3f(1.0f, -0.1f, 0.0f);
+
+	//	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+
+	//	glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(0.0f, 1.0f, 0.0f);
+	//	glVertex3f(-0.05f, 1.25f, 0.0f); glVertex3f(0.0f, 1.15f, 0.0f);
+	//	glVertex3f(0.05f, 1.25f, 0.0f); glVertex3f(0.0f, 1.15f, 0.0f);
+	//	glVertex3f(0.0f, 1.15f, 0.0f); glVertex3f(0.0f, 1.05f, 0.0f);
+
+	//	glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+
+	//	glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(0.0f, 0.0f, 1.0f);
+	//	glVertex3f(-0.05f, 0.1f, 1.05f); glVertex3f(0.05f, 0.1f, 1.05f);
+	//	glVertex3f(0.05f, 0.1f, 1.05f); glVertex3f(-0.05f, -0.1f, 1.05f);
+	//	glVertex3f(-0.05f, -0.1f, 1.05f); glVertex3f(0.05f, -0.1f, 1.05f);
+
+	//	glEnd();
+
+	//	glLineWidth(1.0f);
+	//}
+
+	//glColor3f(color.r, color.g, color.b);
+
+	//if(wire)
+	//	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//else
+	//	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	//
+
+	//glDrawElements(GL_TRIANGLES, indexAmount, GL_UNSIGNED_INT, NULL);
+
+	//
+
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glBindBuffer(GL_NORMAL_ARRAY, 0);
+	//glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	//
+
+	//glBindTexture(GL_TEXTURE_2D, 0);
+
+	//glPopMatrix();
+
+	//glDisableClientState(GL_VERTEX_ARRAY);
+	//glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
 // ------------------------------------------------------------
@@ -386,21 +470,4 @@ void Plane::Render() const
 	}
 
 	glEnd();
-}
-
-
-
-
-// CUSTOM PRIMITIVE ==================================================
-CustomPrimitive::CustomPrimitive(PrimitiveData* _data) : Primitive(), data(_data)
-{
-	type = PrimitiveTypes::Custom_Primitive;
-}
-
-void CustomPrimitive::InnerRender() const
-{
-	glBindBuffer(GL_ARRAY_BUFFER, data->id_vertex);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data->id_index);
-
-	glDrawElements(GL_TRIANGLES, data->num_index, GL_UNSIGNED_INT, 0);
 }

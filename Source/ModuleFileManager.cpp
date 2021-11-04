@@ -24,12 +24,19 @@ bool ModuleFileManager::Init()
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	aiAttachLogStream(&stream);
 
-	//LoadGeometry("Assets/BakerHouse.fbx");
 	//CheckerTexture();
 	//LoadTexture();
 
 	return true;
 }
+
+bool ModuleFileManager::Start()
+{
+	LoadGeometry("Assets/BakerHouse.fbx");
+	return true;
+}
+
+
 
 // Called before quitting
 bool ModuleFileManager::CleanUp()
@@ -62,18 +69,18 @@ void ModuleFileManager::LoadGeometry(const char* path)
 
 Primitive* ModuleFileManager::LoadModel(aiMesh* mesh)
 {
-	PrimitiveData* ourMesh = new PrimitiveData;
+	Primitive* ourMesh = new Primitive;
 
-	ourMesh->num_vertex = mesh->mNumVertices;
-	ourMesh->vertices = new float[ourMesh->num_vertex * 3];
-	memcpy(ourMesh->vertices, mesh->mVertices, sizeof(float) * ourMesh->num_vertex * 3);
-	if (App->gui != nullptr) { App->gui->LogConsole(LOG("Loaded new mesh with %d vertex", ourMesh->num_vertex)); }
+	ourMesh->vertexAmount = mesh->mNumVertices;
+	ourMesh->vertices = new float[ourMesh->vertexAmount * 3];
+	memcpy(ourMesh->vertices, mesh->mVertices, sizeof(float) * ourMesh->vertexAmount * 3);
+	if (App->gui != nullptr) { App->gui->LogConsole(LOG("Loaded new mesh with %d vertex", ourMesh->vertexAmount)); }
 
 	// copy faces
 	if (mesh->HasFaces())
 	{
-		ourMesh->num_index = mesh->mNumFaces * 3;
-		ourMesh->indices = new uint[ourMesh->num_index]; // assume each face is a triangle
+		ourMesh->indexAmount = mesh->mNumFaces * 3;
+		ourMesh->indices = new uint[ourMesh->indexAmount]; // assume each face is a triangle
 		for (uint i = 0; i < mesh->mNumFaces; ++i)
 		{
 			if (mesh->mFaces[i].mNumIndices != 3)
@@ -85,11 +92,9 @@ Primitive* ModuleFileManager::LoadModel(aiMesh* mesh)
 				memcpy(&ourMesh->indices[i * 3], mesh->mFaces[i].mIndices, 3 * sizeof(uint));
 			}
 		}
-
-
-		CustomPrimitive* p = new CustomPrimitive(ourMesh);
-		meshList.push_back(p);
-		return p;
+		ourMesh->GenerateBuffers();
+		meshList.push_back(ourMesh);
+		return ourMesh;
 	}
 	
 	return nullptr;
