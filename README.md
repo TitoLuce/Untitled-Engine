@@ -7,9 +7,9 @@ Arnau Lucena Cobo ([@TitoLuce](https://github.com/TitoLuce))
 Carles López Iglesias ([@carlesli](https://github.com/carlesli))
 
 # Controls
-WASD: Move camera Dorward, Left, Backwards and Right.
+W/A/S/D: Move camera Dorward, Left, Backwards and Right.
 
-RF: Move camera Up/Down.
+R/F: Move camera Up/Down.
 
 Hold rRght Mouse Button and move mouse: Move camera.
 
