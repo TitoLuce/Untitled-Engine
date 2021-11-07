@@ -27,7 +27,7 @@ bool ModuleSceneIntro::Start()
 	//Draw stuff
 	//cube= new Cube();
 
-	//App->fileManager->LoadMesh("Assets/Resources/Models/BakerHouse.fbx");
+	App->fileManager->LoadMesh("Assets/Resources/Models/BakerHouse.fbx");
 
 
 	return ret;
