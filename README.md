@@ -8,10 +8,17 @@ Carles López Iglesias ([@carlesli](https://github.com/carlesli))
 
 # Controls
 WASD: Move camera Dorward, Left, Backwards and Right.
+
 RF: Move camera Up/Down.
+
 Hold rRght Mouse Button and move mouse: Move camera.
+
 Scroll wheel: Zoom in/out.
+
 Hold Shift: Double camera speed.
+
 Esc: Quit.
+
 F1: Open Configuration.
+
 F12: Open Console
