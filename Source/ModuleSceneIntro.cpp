@@ -25,8 +25,9 @@ bool ModuleSceneIntro::Start()
 	p->axis = true;
 
 	//Draw stuff
-	cube= new Cube();
-	cube->SetPos(0, 0, 0);
+	//cube= new Cube();
+
+	//App->fileManager->LoadMesh("Assets/Resources/Models/BakerHouse.fbx");
 
 
 	return ret;

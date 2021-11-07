@@ -56,7 +56,7 @@ bool Application::Init()
 	}
 
 	// After all Init calls we call Start() in all modules
-	LOG("Application Start --------------");
+	gui->LogConsole(LOG("Application Start --------------"));
 	item = list_modules.begin();
 
 	while(item != list_modules.end() && ret == true)
@@ -206,33 +206,3 @@ const char* Application::GetFrameName()
 {
 	return frameName.c_str();
 }
-
-//void Application::LoadPrefs()
-//{
-//	char* buffer = nullptr;
-//	fs->Load(SETTINGS_FOLDER "config.json", &buffer);
-//
-//	if (buffer != nullptr)
-//	{
-//		Config config((const char*)buffer);
-//
-//		if (config.IsValid() == true)
-//		{
-//			LOG("Loading Engine Preferences");
-//
-//			ReadConfiguration(config.GetSection("App"));
-//
-//			Config section;
-//			for (list<Module*>::iterator it = modules.begin(); it != modules.end(); ++it)
-//			{
-//				section = config.GetSection((*it)->GetName());
-//				//if (section.IsValid())
-//				(*it)->Load(&section);
-//			}
-//		}
-//		else
-//			LOG("Cannot load Engine Preferences: Invalid format");
-//
-//		RELEASE_ARRAY(buffer);
-//	}
-//}

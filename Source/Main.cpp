@@ -67,7 +67,7 @@ int main(int argc, char ** argv)
 
 			if (update_return == UPDATE_ERROR)
 			{
-				LOG("Application Update exits with ERROR");
+				App->gui->LogConsole(LOG("Application Update exits with ERROR"));
 				state = MAIN_EXIT;
 			}
 
@@ -78,10 +78,10 @@ int main(int argc, char ** argv)
 
 		case MAIN_FINISH:
 
-			LOG("-------------- Application CleanUp --------------");
+			App->gui->LogConsole(LOG("-------------- Application CleanUp --------------"));
 			if (App->CleanUp() == false)
 			{
-				LOG("Application CleanUp exits with ERROR");
+				App->gui->LogConsole(LOG("Application CleanUp exits with ERROR"));
 			}
 			else
 				main_return = EXIT_SUCCESS;

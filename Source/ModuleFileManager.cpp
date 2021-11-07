@@ -24,14 +24,11 @@ bool ModuleFileManager::Init()
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	aiAttachLogStream(&stream);
 
-	//LoadTexture();
-
 	return true;
 }
 
 bool ModuleFileManager::Start()
 {
-	LoadMesh("Assets/Resources/Models/BakerHouse.fbx");
 	return true;
 }
 
@@ -62,7 +59,7 @@ void ModuleFileManager::LoadMesh(const char* path)
 			tmpMesh->vertices = new float[tmpMesh->numVertices * 3];
 			memcpy(tmpMesh->vertices, scene->mMeshes[i]->mVertices, sizeof(float) * tmpMesh->numVertices * 3);
 
-			LOG("New mesh with %d vertices", tmpMesh->numVertices);
+			App->gui->LogConsole(LOG("New mesh with %d vertices", tmpMesh->numVertices));
 
 			if (scene->mMeshes[i]->HasFaces())
 			{
@@ -73,7 +70,7 @@ void ModuleFileManager::LoadMesh(const char* path)
 				{
 					if (scene->mMeshes[i]->mFaces[j].mNumIndices != 3)
 					{
-						LOG("WARNING, geometry face with != 3 indices!");
+						App->gui->LogConsole(LOG("WARNING, geometry face with != 3 indices!"));
 					}
 					else
 					{
@@ -95,7 +92,7 @@ void ModuleFileManager::LoadMesh(const char* path)
 			}
 			else
 			{
-				LOG("Warning, No texture coordinates found");
+				App->gui->LogConsole(LOG("Warning, No texture coordinates found"));
 			}
 
 
@@ -112,7 +109,7 @@ void ModuleFileManager::LoadMesh(const char* path)
 			}
 			else
 			{
-				LOG("Warning, No Normal coordinates found");
+				App->gui->LogConsole(LOG("Warning, No Normal coordinates found"));
 			}
 
 			scene->mMaterials[0]->GetTexture(aiTextureType::aiTextureType_DIFFUSE, 0, &aiString::aiString("Assets/Textures/baker_house.png"));
@@ -125,6 +122,6 @@ void ModuleFileManager::LoadMesh(const char* path)
 	}
 	else
 	{
-		LOG("Error loading scene %s", path);
+		App->gui->LogConsole(LOG("Error loading scene %s", path));
 	}
 }

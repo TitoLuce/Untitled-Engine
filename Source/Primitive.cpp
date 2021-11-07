@@ -267,62 +267,119 @@ void Primitive::Scale(float x, float y, float z)
 }
 
 // CUBE ============================================
-Cube::Cube() : Primitive(), size(1.0f, 1.0f, 1.0f)
+
+//Not on use
+Cube::Cube() : Mesh()
 {
-	type = PrimitiveTypes::Primitive_Cube;
+
+	//Generate Vertices
+	vertices = new float[24]
+	{
+		//Bottom Vertices
+		0.0f ,0.0f, 0.0f, //0
+		1.0f ,0.0f, 0.0f, //1
+		1.0f ,0.0f, 1.0f, //2
+		0.0f ,0.0f, 1.0f, //3
+
+		//Top Vertices
+		0.0f, 1.0f, 0.0f, //4
+		1.0f, 1.0f, 0.0f, //5
+		1.0f, 1.0f, 1.0f, //6
+		0.0f, 1.0f, 1.0f //7
+	};
+
+	//Generate triangles through vertices (Always do it counterclockwise)
+	indices = new uint[36]
+	{
+		//Bottom face
+		0,1,2, 2,3,0,
+		//Front Face
+		3,2,6, 6,7,3,
+		//Left face
+		7,4,0, 0,3,7,
+		//Right face
+		2,1,5, 5,6,2,
+		//Back face
+		1,0,4, 4,5,1,
+		//Top face
+		5,4,7, 7,6,5
+	};
+
+	//UVs
+	textureCoords = new float[16]
+	{
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+
+		0.0f, 1.0f,
+		1.0f, 1.0f,
+		1.0f, 0.0f,
+		0.0f, 0.0f
+	};
+
+	numVertices = 8;
+	numIndices = 36;
+
 }
 
-Cube::Cube(float sizeX, float sizeY, float sizeZ) : Primitive(), size(sizeX, sizeY, sizeZ)
-{
-	type = PrimitiveTypes::Primitive_Cube;
-}
-
-void Cube::InnerRender() const
-{
-	float sx = size.x * 0.5f;
-	float sy = size.y * 0.5f;
-	float sz = size.z * 0.5f;
-
-	glBegin(GL_QUADS);
-
-	glNormal3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(-sx, -sy, sz);
-	glVertex3f(sx, -sy, sz);
-	glVertex3f(sx, sy, sz);
-	glVertex3f(-sx, sy, sz);
-
-	glNormal3f(0.0f, 0.0f, -1.0f);
-	glVertex3f(sx, -sy, -sz);
-	glVertex3f(-sx, -sy, -sz);
-	glVertex3f(-sx, sy, -sz);
-	glVertex3f(sx, sy, -sz);
-
-	glNormal3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(sx, -sy, sz);
-	glVertex3f(sx, -sy, -sz);
-	glVertex3f(sx, sy, -sz);
-	glVertex3f(sx, sy, sz);
-
-	glNormal3f(-1.0f, 0.0f, 0.0f);
-	glVertex3f(-sx, -sy, -sz);
-	glVertex3f(-sx, -sy, sz);
-	glVertex3f(-sx, sy, sz);
-	glVertex3f(-sx, sy, -sz);
-
-	glNormal3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(-sx, sy, sz);
-	glVertex3f(sx, sy, sz);
-	glVertex3f(sx, sy, -sz);
-	glVertex3f(-sx, sy, -sz);
-
-	glNormal3f(0.0f, -1.0f, 0.0f);
-	glVertex3f(-sx, -sy, -sz);
-	glVertex3f(sx, -sy, -sz);
-	glVertex3f(sx, -sy, sz);
-	glVertex3f(-sx, -sy, sz);
-
-	glEnd();
-}
+//Cube::Cube() : Primitive(), size(1.0f, 1.0f, 1.0f)
+//{
+//	type = PrimitiveTypes::Primitive_Cube;
+//}
+//
+//Cube::Cube(float sizeX, float sizeY, float sizeZ) : Primitive(), size(sizeX, sizeY, sizeZ)
+//{
+//	type = PrimitiveTypes::Primitive_Cube;
+//}
+//
+//void Cube::InnerRender() const
+//{
+//	float sx = size.x * 0.5f;
+//	float sy = size.y * 0.5f;
+//	float sz = size.z * 0.5f;
+//
+//	glBegin(GL_QUADS);
+//
+//	glNormal3f(0.0f, 0.0f, 1.0f);
+//	glVertex3f(-sx, -sy, sz);
+//	glVertex3f(sx, -sy, sz);
+//	glVertex3f(sx, sy, sz);
+//	glVertex3f(-sx, sy, sz);
+//
+//	glNormal3f(0.0f, 0.0f, -1.0f);
+//	glVertex3f(sx, -sy, -sz);
+//	glVertex3f(-sx, -sy, -sz);
+//	glVertex3f(-sx, sy, -sz);
+//	glVertex3f(sx, sy, -sz);
+//
+//	glNormal3f(1.0f, 0.0f, 0.0f);
+//	glVertex3f(sx, -sy, sz);
+//	glVertex3f(sx, -sy, -sz);
+//	glVertex3f(sx, sy, -sz);
+//	glVertex3f(sx, sy, sz);
+//
+//	glNormal3f(-1.0f, 0.0f, 0.0f);
+//	glVertex3f(-sx, -sy, -sz);
+//	glVertex3f(-sx, -sy, sz);
+//	glVertex3f(-sx, sy, sz);
+//	glVertex3f(-sx, sy, -sz);
+//
+//	glNormal3f(0.0f, 1.0f, 0.0f);
+//	glVertex3f(-sx, sy, sz);
+//	glVertex3f(sx, sy, sz);
+//	glVertex3f(sx, sy, -sz);
+//	glVertex3f(-sx, sy, -sz);
+//
+//	glNormal3f(0.0f, -1.0f, 0.0f);
+//	glVertex3f(-sx, -sy, -sz);
+//	glVertex3f(sx, -sy, -sz);
+//	glVertex3f(sx, -sy, sz);
+//	glVertex3f(-sx, -sy, sz);
+//
+//	glEnd();
+//}
 
 // SPHERE ============================================
 Sphere::Sphere() : Primitive(), radius(1.0f)

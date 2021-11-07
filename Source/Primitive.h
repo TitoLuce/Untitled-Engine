@@ -59,6 +59,7 @@ public:
 
 	// Checker texture
 	uint checkerTextureID;
+	bool checkerTextureOn = false;
 };
 
 class Primitive
@@ -87,13 +88,10 @@ protected:
 };
 
 // ============================================
-class Cube : public Primitive
+class Cube : public Mesh
 {
 public:
 	Cube();
-	Cube(float sizeX, float sizeY, float sizeZ);
-
-	void InnerRender() const;
 
 public:
 	vec3 size;

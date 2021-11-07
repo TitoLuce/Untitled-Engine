@@ -27,7 +27,10 @@ public:
 	vec3 X, Y, Z, Position, Reference;
 	float distance;
 
+
 private:
 
 	mat4x4 ViewMatrix, ViewMatrixInverse;
+
+	float speed = 0;
 };
