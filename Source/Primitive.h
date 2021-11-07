@@ -15,70 +15,72 @@ enum PrimitiveTypes
 	Primitive_Plane,
 	Primitive_Cube,
 	Primitive_Sphere,
-	Primitive_Cylinder
+	Primitive_Cylinder,
+	Primitive_Pyramid,
+	Imported_Mesh
 };
 
-struct Texture
+
+class Mesh
 {
-	std::string name = "Unnamed Texture";
-	std::string path = "Unknown path";
-	uint id = -1;
-	GLubyte* data = nullptr;
-	int width = -1;
-	int height = -1;
+public:
+	Mesh();
+	~Mesh();
 
-	~Texture()
-	{
-		name.clear();
-		path.clear();
-		//delete data;
-		data = nullptr;
-	}
+	void Initialize();
+
+	void Render() const;
+
+	uint CreateTexture(const char* path);
+	void CreateCheckerTexture();
+
+public:
+	// Vertex Buffer Object (VBO)
+	uint vertexBuffer = 0;
+	uint numVertices = 0;
+	float* vertices = nullptr;
+
+	// Vertex Array Object (VAO)
+	//uint VAO = 0;
+
+	// Element Buffer Object (EBO)
+	uint indexBuffer = 0;
+	uint numIndices = 0;
+	uint* indices = nullptr;
+
+	// Normals
+	uint normalsBuffer = 0;
+	float* normals = nullptr;
+
+	// Textures Coords
+	uint textureBuffer = 0;
+	float* textureCoords = nullptr;
+	uint textureID = 0;
+
+	// Checker texture
+	uint checkerTextureID;
 };
-
 
 class Primitive
 {
 public:
 
 	Primitive();
-
-	void GenerateBuffers();
-
-	bool SetTexture(Texture* texture);
-	void SetCheckersTexture();
+	virtual ~Primitive();
 
 	virtual void	Render() const;
 	virtual void	InnerRender() const;
+
 	void			SetPos(float x, float y, float z);
-	void			SetRotation(float angle, const vec3 &u);
+	void			SetRotation(float angle, const vec3& u);
 	void			Scale(float x, float y, float z);
-	PrimitiveTypes	GetType() const;
+
+	PrimitiveTypes		GetType() const;
 
 public:
-	
 	Color color;
 	mat4x4 transform;
-	bool axis,wire;
-
-	uint vertexBuffer = -1;
-	int vertexAmount = -1;
-	float* vertices = nullptr;
-
-	uint indexBuffer = -1;
-	int indexAmount = -1;
-	uint* indices = nullptr;
-
-	uint normalsBuffer = -1;
-	float* normals = nullptr;
-
-	uint textureBuffer = -1;
-	uint textureID;
-	float* texCoords = nullptr;
-	float* colors;
-	Texture* texture;
-
-	const char* name;
+	bool axis, wire;
 
 protected:
 	PrimitiveTypes type;
@@ -87,8 +89,14 @@ protected:
 // ============================================
 class Cube : public Primitive
 {
-public :
+public:
 	Cube();
+	Cube(float sizeX, float sizeY, float sizeZ);
+
+	void InnerRender() const;
+
+public:
+	vec3 size;
 };
 
 // ============================================
@@ -97,7 +105,9 @@ class Sphere : public Primitive
 public:
 	Sphere();
 	Sphere(float radius);
+
 	void InnerRender() const;
+
 public:
 	float radius;
 };
@@ -108,7 +118,9 @@ class Cylinder : public Primitive
 public:
 	Cylinder();
 	Cylinder(float radius, float height);
+
 	void InnerRender() const;
+
 public:
 	float radius;
 	float height;
@@ -120,7 +132,9 @@ class Line : public Primitive
 public:
 	Line();
 	Line(float x, float y, float z);
+
 	void InnerRender() const;
+
 public:
 	vec3 origin;
 	vec3 destination;
@@ -132,10 +146,25 @@ class Plane : public Primitive
 public:
 	Plane();
 	Plane(float x, float y, float z, float d);
-	void Render() const;
+
+	void InnerRender() const;
+
 public:
 	vec3 normal;
 	float constant;
+};
+
+class Pyramid : public Primitive
+{
+public:
+	Pyramid();
+	Pyramid(float baseX, float baseZ, float height);
+
+	void InnerRender() const;
+
+public:
+	vec2 base;
+	float height;
 };
 
 #endif //!__PRIMITIVES_H__

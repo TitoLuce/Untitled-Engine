@@ -11,26 +11,22 @@
 
 typedef unsigned char GLubyte;
 
+class Mesh;
+
 class ModuleFileManager : public Module
 {
 public:
-
 	ModuleFileManager(Application* app, bool start_enabled = true);
-	virtual ~ModuleFileManager();
+	~ModuleFileManager();
 
 	bool Init();
 	bool Start();
 	bool CleanUp();
 
-	void LoadGeometry(const char* path);
-	Primitive* LoadModel(aiMesh* mesh);
+	void LoadMesh(const char* filePath);
 
 public:
-
-	std::vector<Primitive*> meshList;
-
-	uint* textureID;
-	GLubyte* texture;
+	std::vector<Mesh*> meshList;
 };
 
 #endif // !__MODULE_FILE_MANAGER_H__

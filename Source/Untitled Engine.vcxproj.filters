@@ -592,6 +592,7 @@
     <ClInclude Include="External\DevIL\include\ilut_config.h">
       <Filter>Tools\DevIL</Filter>
     </ClInclude>
+    <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Tools">

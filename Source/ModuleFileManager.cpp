@@ -31,7 +31,7 @@ bool ModuleFileManager::Init()
 
 bool ModuleFileManager::Start()
 {
-	LoadGeometry("Assets/BakerHouse.fbx");
+	LoadMesh("Assets/Resources/Models/BakerHouse.fbx");
 	return true;
 }
 
@@ -48,87 +48,83 @@ bool ModuleFileManager::CleanUp()
 	return true;
 }
 
-void ModuleFileManager::LoadGeometry(const char* path)
+void ModuleFileManager::LoadMesh(const char* path)
 {
 	const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
+
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		// Use scene->mNumMeshes to iterate on scene->mMeshes array
-		for (uint i = 0; i < scene->mNumMeshes; i++)
+		for (uint i = 0; i < scene->mNumMeshes; ++i)
 		{
-			meshList.push_back(LoadModel(scene->mMeshes[i]));
+			Mesh* tmpMesh = new Mesh;
+
+			tmpMesh->numVertices = scene->mMeshes[i]->mNumVertices;
+			tmpMesh->vertices = new float[tmpMesh->numVertices * 3];
+			memcpy(tmpMesh->vertices, scene->mMeshes[i]->mVertices, sizeof(float) * tmpMesh->numVertices * 3);
+
+			LOG("New mesh with %d vertices", tmpMesh->numVertices);
+
+			if (scene->mMeshes[i]->HasFaces())
+			{
+				tmpMesh->numIndices = scene->mMeshes[i]->mNumFaces * 3;
+				tmpMesh->indices = new uint[tmpMesh->numIndices]; // Each face is a triangle
+
+				for (uint j = 0; j < scene->mMeshes[i]->mNumFaces; ++j)
+				{
+					if (scene->mMeshes[i]->mFaces[j].mNumIndices != 3)
+					{
+						LOG("WARNING, geometry face with != 3 indices!");
+					}
+					else
+					{
+						memcpy(&tmpMesh->indices[j * 3], scene->mMeshes[i]->mFaces[j].mIndices, sizeof(uint) * 3);
+					}
+				}
+			}
+
+			// Copying Texture coordinates
+			if (scene->mMeshes[i]->mTextureCoords != NULL)
+			{
+				tmpMesh->textureCoords = new float[tmpMesh->numVertices * 2];
+
+				for (uint j = 0; j < tmpMesh->numVertices; j++)
+				{
+					tmpMesh->textureCoords[j * 2] = scene->mMeshes[i]->mTextureCoords[0][j].x;
+					tmpMesh->textureCoords[(j * 2) + 1] = 1.0f - scene->mMeshes[i]->mTextureCoords[0][j].y;
+				}
+			}
+			else
+			{
+				LOG("Warning, No texture coordinates found");
+			}
+
+
+			if (scene->mMeshes[i]->mTextureCoords != NULL)
+			{
+				tmpMesh->normals = new float[tmpMesh->numVertices * 3];
+
+				for (uint j = 0; j < tmpMesh->numVertices; j++)
+				{
+					tmpMesh->normals[j * 2] = scene->mMeshes[i]->mNormals[j].x;
+					tmpMesh->normals[(j * 2) + 1] = scene->mMeshes[i]->mNormals[j].y;
+					tmpMesh->normals[(j * 2) + 2] = scene->mMeshes[i]->mNormals[j].z;
+				}
+			}
+			else
+			{
+				LOG("Warning, No Normal coordinates found");
+			}
+
+			scene->mMaterials[0]->GetTexture(aiTextureType::aiTextureType_DIFFUSE, 0, &aiString::aiString("Assets/Textures/baker_house.png"));
+			tmpMesh->textureID = tmpMesh->CreateTexture("Assets/Resources/Textures/baker_house.png");
+
+			tmpMesh->Initialize();
+			meshList.push_back(tmpMesh);
 		}
 		aiReleaseImport(scene);
 	}
 	else
 	{
-		if (App->gui != nullptr) App->gui->LogConsole(LOG("Error loading %s", path));
+		LOG("Error loading scene %s", path);
 	}
-}
-
-Primitive* ModuleFileManager::LoadModel(aiMesh* mesh)
-{
-	Primitive* ourMesh = new Primitive;
-
-	ourMesh->vertexAmount = mesh->mNumVertices;
-	ourMesh->vertices = new float[ourMesh->vertexAmount * 3];
-	memcpy(ourMesh->vertices, mesh->mVertices, sizeof(float) * ourMesh->vertexAmount * 3);
-	if (App->gui != nullptr) { App->gui->LogConsole(LOG("Loaded new mesh with %d vertex", ourMesh->vertexAmount)); }
-
-	// copy faces
-	if (mesh->HasFaces())
-	{
-		ourMesh->indexAmount = mesh->mNumFaces * 3;
-		ourMesh->indices = new uint[ourMesh->indexAmount]; // assume each face is a triangle
-		for (uint i = 0; i < mesh->mNumFaces; ++i)
-		{
-			if (mesh->mFaces[i].mNumIndices != 3)
-			{
-				App->gui->LogConsole(LOG("WARNING, geometry face with != 3 indices!"));
-			}	
-			else
-			{
-				memcpy(&ourMesh->indices[i * 3], mesh->mFaces[i].mIndices, 3 * sizeof(uint));
-			}
-		}
-		if (mesh->mTextureCoords != NULL)
-		{
-			ourMesh->texCoords = new float[ourMesh->vertexAmount * 2];
-
-			for (uint i = 0; i < ourMesh->vertexAmount; i++)
-			{
-				ourMesh->texCoords[i*2] = mesh->mTextureCoords[0][i].x;
-				ourMesh->texCoords[(i*2)+1] = mesh->mTextureCoords[0][i].y;
-			}
-		}
-		else
-		{
-			App->gui->LogConsole(LOG("Warning, No texture coordinates found"));
-		}
-		if (mesh->mTextureCoords != NULL)
-		{
-			ourMesh->normals = new float[ourMesh->vertexAmount * 3];
-
-			for (uint i = 0; i < ourMesh->vertexAmount; i++)
-			{
-				ourMesh->normals[i * 2] = mesh->mNormals[i].x;
-				ourMesh->normals[(i * 2) + 1] = mesh->mNormals[i].y;
-				ourMesh->normals[(i * 2) + 2] = mesh->mNormals[i].z;
-			}
-		}
-		else
-		{
-			App->gui->LogConsole(LOG("Warning, No normals coordinates found"));
-		}
-
-
-
-		ourMesh->SetTexture(nullptr);
-		ourMesh->GenerateBuffers();
-		
-		meshList.push_back(ourMesh);
-		return ourMesh;
-	}
-	
-	return nullptr;
 }

@@ -227,6 +227,7 @@
     <ClInclude Include="ModuleSceneIntro.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="Primitive.h" />
+    <ClInclude Include="stb_image.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
