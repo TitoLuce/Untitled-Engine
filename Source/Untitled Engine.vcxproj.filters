@@ -569,6 +569,7 @@
     </ClInclude>
     <ClInclude Include="ModuleFileManager.h" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="json.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Tools">

@@ -4,6 +4,7 @@
 #include "Application.h"
 #include "ModuleWindow.h"
 
+
 Application::Application(ConsoleBuffer* _buff)
 {
 	buff = _buff;

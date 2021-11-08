@@ -4,6 +4,7 @@
 #include "Application.h"
 #include "ModuleWindow.h"
 #include "imgui.h"
+#include "SDL_opengl.h"
 
 ModuleGuiManager::ModuleGuiManager(Application* app, bool start_enabled) : Module(app, start_enabled), fpsLog(100), msLog(100)
 {
@@ -205,6 +206,34 @@ void ModuleGuiManager::Config()
         tempTitle = "Milliseconds ";
         tempTitle += std::to_string((int)App->GetMs());
         ImGui::PlotHistogram("##milliseconds", &msLog[0], msLog.size(), 0, tempTitle.c_str(), 0.0f, 40.0f, ImVec2(310, 100));
+    }
+
+    if (ImGui::CollapsingHeader("Hardware"))
+    {
+        SDL_version getVersion;
+        SDL_GetVersion(&getVersion);
+        ImGui::Text("SDL Version: %i%i%i", getVersion.major, getVersion.minor, getVersion.patch);
+
+        ImGui::Separator();
+
+        ImGui::Text("CPU %d (Cache: %u KB)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());
+        ImGui::Text("RAM: %.1f GB", float(SDL_GetSystemRAM() / 1024.0f));
+
+        ImGui::Separator();
+
+        ImGui::Text("GPU: %s", glGetString(GL_RENDERER));
+        ImGui::Text("Brand: %s", glGetString(GL_VENDOR));
+
+        GLint vramSize = 0;
+        GLint vramAvailable = 0;
+        glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &vramSize);
+        glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &vramAvailable);
+        vramSize /= 1000;
+        vramAvailable /= 1000;
+
+        ImGui::Text("VRAM Size: %d MB", vramSize);
+        ImGui::Text("VRAM Usage: %d", (vramSize - vramAvailable));
+        ImGui::Text("VRAM Available: %d", vramAvailable);
     }
 
     if (ImGui::CollapsingHeader("Window"))
