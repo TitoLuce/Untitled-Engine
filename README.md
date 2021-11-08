@@ -11,14 +11,10 @@ W/A/S/D: Move camera Dorward, Left, Backwards and Right.
 
 R/F: Move camera Up/Down.
 
-Hold rRght Mouse Button and move mouse: Move camera.
+Hold Right Mouse Button and move mouse: Move camera.
 
 Scroll wheel: Zoom in/out.
 
 Hold Shift: Double camera speed.
 
 Esc: Quit.
-
-F1: Open Configuration.
-
-F12: Open Console
