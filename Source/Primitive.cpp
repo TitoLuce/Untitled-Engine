@@ -17,8 +17,6 @@ Mesh::Mesh()
 	numVertices = 0;
 	vertices = nullptr;
 
-	//VAO = 0;
-
 	indexBuffer = 0;
 	numIndices = 0;
 	indices = nullptr;
@@ -73,33 +71,22 @@ void Mesh::Render() const
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	// Vertices
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
-	// Normals
 	glBindBuffer(GL_NORMAL_ARRAY, normalsBuffer);
 	glNormalPointer(GL_FLOAT, 0, NULL);
 
-	// Coord
 	glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
 	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
 
-	// Checker Texture
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindTexture(GL_TEXTURE_2D, textureID);
-	//glBindTexture(GL_TEXTURE_2D, checkerTextureID);
 
-	// VAO
-	//glBindVertexArray(VAO);
-
-	// Indices
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 
 	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, NULL);
 
-	// Unbind Buffers
-	//glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_NORMAL_ARRAY, 0);
 	glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
